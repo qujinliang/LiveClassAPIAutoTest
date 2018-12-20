@@ -1,0 +1,943 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>LiveClassAPI接口测试</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2.2"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+<style type="text/css" media="screen">
+body        { font-family: Microsoft YaHei,Tahoma,arial,helvetica,sans-serif;padding: 20px; font-size: 80%; }
+table       { font-size: 100%; }
+/* -- heading ---------------------------------------------------------------------- */
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+/* -- report ------------------------------------------------------------------------ */
+#total_row  { font-weight: bold; }
+.passCase   { color: #5cb85c; }
+.failCase   { color: #d9534f; font-weight: bold; }
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+</style>
+
+</head>
+<body >
+<script language="javascript" type="text/javascript">
+output_list = Array();
+/*level 调整增加只显示通过用例的分类 --Findyou
+0:Summary //all hiddenRow
+1:Failed  //pt hiddenRow, ft none
+2:Pass    //pt none, ft hiddenRow
+3:All     //pt none, ft none
+*/
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level == 2 || level == 0 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level < 2) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+    }
+    //加入【详细】切换文字变化 --Findyou
+    detail_class=document.getElementsByClassName('detail');
+	//console.log(detail_class.length)
+	if (level == 3) {
+		for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="收起"
+		}
+	}
+	else{
+			for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="详细"
+		}
+	}
+}
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        //ID修改 点 为 下划线 -Findyou
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+        if (toHide) {
+            document.getElementById(tid).className = 'hiddenRow';
+            document.getElementById(cid).innerText = "详细"
+        }
+        else {
+            document.getElementById(tid).className = '';
+            document.getElementById(cid).innerText = "收起"
+        }
+    }
+}
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+</script>
+<div class='heading'>
+<h1 style="font-family: Microsoft YaHei">LiveClassAPI接口测试</h1>
+<p class='attribute'><strong>开始时间 : </strong> 2018-08-22 18:58:20</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:18.652500</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 29，通过 29，通过率= 100.00%</p>
+
+<p class='description'>详情请下载附件查看：</p>
+</div>
+
+
+<p id='show_detail_line'>
+<a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 100.00% }</a>
+<a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 0 }</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过{ 29 }</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 29 }</a>
+</p>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 14px;">
+    <td>报告列表</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>失败</td>
+    <td>错误</td>
+    <td>详细</td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_a_Create_test.LiveClassAPICreateTest: 创建直播间接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',1)" class="detail" id='c1'>详细</a></td>
+</tr>
+
+<tr id='pt1_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_create: 创建直播间成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse in">
+    <pre>
+    
+pt1_1: {'data': {'roomid': '83BC5BBFCF7ED07F9C33DC5901307461'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_b_Start_test.LiveClassAPIStartTest: 开始直播接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c2',1)" class="detail" id='c2'>详细</a></td>
+</tr>
+
+<tr id='pt2_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_start: 开始直播成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse in">
+    <pre>
+    
+pt2_1: {'liveId': 'E5B45B284630BCBA', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_c_Stop_test.LiveClassAPIStopTest: 停止直播接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c3',1)" class="detail" id='c3'>详细</a></td>
+</tr>
+
+<tr id='pt3_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_stop: 停止直播成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+    <div id='div_pt3_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+    <div id='div_pt3_1' class="collapse in">
+    <pre>
+    
+pt3_1: {'data': {'end_time': '2018-08-22 18:58:29', 'start_time': '2018-08-22 18:58:20'}, 'liveId': 'E5B45B284630BCBA', 'liveStopTime': 'Wed Aug 22 18:58:28 CST 2018', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_d_Update_test.LiveClassAPIUpdateTest: 编辑直播间接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c4',1)" class="detail" id='c4'>详细</a></td>
+</tr>
+
+<tr id='pt4_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_update: 更新直播间成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_1'>通过</button>
+    <div id='div_pt4_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_1'>通过</button>
+    <div id='div_pt4_1' class="collapse in">
+    <pre>
+    
+pt4_1: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_e_SetSingle_test.LiveClassAPISetTest: 切换合流布局模式接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c5',1)" class="detail" id='c5'>详细</a></td>
+</tr>
+
+<tr id='pt5_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_setSingle: 切换合流布局模式成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_1'>通过</button>
+    <div id='div_pt5_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_1'>通过</button>
+    <div id='div_pt5_1' class="collapse in">
+    <pre>
+    
+pt5_1: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_f_List_test.LiveClassAPIListTest: 获取直播间列表接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c6',1)" class="detail" id='c6'>详细</a></td>
+</tr>
+
+<tr id='pt6_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 获取直播间列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_1'>通过</button>
+    <div id='div_pt6_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_1'>通过</button>
+    <div id='div_pt6_1' class="collapse in">
+    <pre>
+    
+pt6_1: {'current': 1, 'result': 'OK', 'rooms': [{'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7d41cb9d8eb8398a3cb40c', 'audience_authtype': 2, 'audience_pass': '180CDC15E4801E55', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=83BC5BBFCF7ED07F9C33DC5901307461&amp;userid=180CDC15E4801E55', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-22', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 35635, 'inspector_authtype': 1, 'inspector_pass': '180CDC15E4801E55', 'is_follow': '', 'light_mark': 0, 'link_url': {'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=83BC5BBFCF7ED07F9C33DC5901307461&amp;userid=180CDC15E4801E55', 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=83BC5BBFCF7ED07F9C33DC5901307461&amp;userid=180CDC15E4801E55', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=83BC5BBFCF7ED07F9C33DC5901307461&amp;userid=180CDC15E4801E55'}, 'live_roomid': '83BC5BBFCF7ED07F9C33DC5901307461', 'live_status': 0, 'manual_record': 0, 'max_streams': 16, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-22 18_58_29', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=83BC5BBFCF7ED07F9C33DC5901307461&amp;userid=180CDC15E4801E55', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '83BC5BBFCF7ED07F9C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '180CDC15E4801E55', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=83BC5BBFCF7ED07F9C33DC5901307461&amp;userid=180CDC15E4801E55', 'templatetype': 1, 'userid': '180CDC15E4801E55', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7d3e6ce6dea339789d6a81', 'audience_authtype': 2, 'audience_pass': '180CDC15E4801E55', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=C25BF3480DDD0F599C33DC5901307461&amp;userid=180CDC15E4801E55', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-22', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 35633, 'inspector_authtype': 1, 'inspector_pass': '180CDC15E4801E55', 'is_follow': '', 'light_mark': 0, 'link_url': {'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=C25BF3480DDD0F599C33DC5901307461&amp;userid=180CDC15E4801E55', 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=C25BF3480DDD0F599C33DC5901307461&amp;userid=180CDC15E4801E55', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=C25BF3480DDD0F599C33DC5901307461&amp;userid=180CDC15E4801E55'}, 'live_roomid': 'C25BF3480DDD0F599C33DC5901307461', 'live_status': 0, 'manual_record': 0, 'max_streams': 16, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-22 18_44_05', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=C25BF3480DDD0F599C33DC5901307461&amp;userid=180CDC15E4801E55', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': 'C25BF3480DDD0F599C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 20, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '180CDC15E4801E55', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=C25BF3480DDD0F599C33DC5901307461&amp;userid=180CDC15E4801E55', 'templatetype': 1, 'userid': '180CDC15E4801E55', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7d3b674a5a663984e0ff6c', 'audience_authtype': 2, 'audience_pass': '180CDC15E4801E55', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=CDF7644D7F9A30599C33DC5901307461&amp;userid=180CDC15E4801E55', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-22', 'desc': 'autoTestCreateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 35631, 'inspector_authtype': 1, 'inspector_pass': '180CDC15E4801E55', 'is_follow': '', 'light_mark': 0, 'link_url': {'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=CDF7644D7F9A30599C33DC5901307461&amp;userid=180CDC15E4801E55', 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=CDF7644D7F9A30599C33DC5901307461&amp;userid=180CDC15E4801E55', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=CDF7644D7F9A30599C33DC5901307461&amp;userid=180CDC15E4801E55'}, 'live_roomid': 'CDF7644D7F9A30599C33DC5901307461', 'live_status': 0, 'manual_record': 0, 'max_streams': 16, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-22 18_31_04', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=CDF7644D7F9A30599C33DC5901307461&amp;userid=180CDC15E4801E55', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': 'CDF7644D7F9A30599C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '180CDC15E4801E55', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=CDF7644D7F9A30599C33DC5901307461&amp;userid=180CDC15E4801E55', 'templatetype': 1, 'userid': '180CDC15E4801E55', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7d39d3e6dea339789d6a7b', 'audience_authtype': 2, 'audience_pass': '180CDC15E4801E55', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=E6ACC61844CF05CD9C33DC5901307461&amp;userid=180CDC15E4801E55', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-22', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 35630, 'inspector_authtype': 1, 'inspector_pass': '180CDC15E4801E55', 'is_follow': '', 'light_mark': 0, 'link_url': {'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=E6ACC61844CF05CD9C33DC5901307461&amp;userid=180CDC15E4801E55', 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=E6ACC61844CF05CD9C33DC5901307461&amp;userid=180CDC15E4801E55', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=E6ACC61844CF05CD9C33DC5901307461&amp;userid=180CDC15E4801E55'}, 'live_roomid': 'E6ACC61844CF05CD9C33DC5901307461', 'live_status': 0, 'manual_record': 0, 'max_streams': 16, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-22 18_24_20', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=E6ACC61844CF05CD9C33DC5901307461&amp;userid=180CDC15E4801E55', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': 'E6ACC61844CF05CD9C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 20, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '180CDC15E4801E55', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=E6ACC61844CF05CD9C33DC5901307461&amp;userid=180CDC15E4801E55', 'templatetype': 1, 'userid': '180CDC15E4801E55', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7ccd02eea86f397e8c4fb0', 'audience_authtype': 2, 'audience_pass': '180CDC15E4801E55', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=63812B5391C82CA09C33DC5901307461&amp;userid=180CDC15E4801E55', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-22', 'desc': 'autoTestCreateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 35448, 'inspector_authtype': 1, 'inspector_pass': '180CDC15E4801E55', 'is_follow': '', 'light_mark': 0, 'link_url': {'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=63812B5391C82CA09C33DC5901307461&amp;userid=180CDC15E4801E55', 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=63812B5391C82CA09C33DC5901307461&amp;userid=180CDC15E4801E55', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=63812B5391C82CA09C33DC5901307461&amp;userid=180CDC15E4801E55'}, 'live_roomid': '63812B5391C82CA09C33DC5901307461', 'live_status': 0, 'manual_record': 0, 'max_streams': 16, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-22 10_40_05', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=63812B5391C82CA09C33DC5901307461&amp;userid=180CDC15E4801E55', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '63812B5391C82CA09C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '180CDC15E4801E55', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=63812B5391C82CA09C33DC5901307461&amp;userid=180CDC15E4801E55', 'templatetype': 1, 'userid': '180CDC15E4801E55', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7be7994a5a663984e0fe73', 'audience_authtype': 2, 'audience_pass': '180CDC15E4801E55', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=BDB51369D6D25E569C33DC5901307461&amp;userid=180CDC15E4801E55', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-21', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 35410, 'inspector_authtype': 1, 'inspector_pass': '180CDC15E4801E55', 'is_follow': '', 'light_mark': 0, 'link_url': {'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=BDB51369D6D25E569C33DC5901307461&amp;userid=180CDC15E4801E55', 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=BDB51369D6D25E569C33DC5901307461&amp;userid=180CDC15E4801E55', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=BDB51369D6D25E569C33DC5901307461&amp;userid=180CDC15E4801E55'}, 'live_roomid': 'BDB51369D6D25E569C33DC5901307461', 'live_status': 0, 'manual_record': 0, 'max_streams': 16, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-21 18_34_23', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=BDB51369D6D25E569C33DC5901307461&amp;userid=180CDC15E4801E55', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': 'BDB51369D6D25E569C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 20, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '180CDC15E4801E55', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=BDB51369D6D25E569C33DC5901307461&amp;userid=180CDC15E4801E55', 'templatetype': 1, 'userid': '180CDC15E4801E55', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b45c8812b1d15399a52e2bd', 'audience_authtype': 2, 'audience_pass': '180CDC15E4801E55', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=E9664C1FFA9B08D09C33DC5901307461&amp;userid=180CDC15E4801E55', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-07-11', 'desc': '&lt;p&gt;首开小班课&lt;/p&gt;', 'desktop_audio': 0, 'helper_switch': 0, 'id': 28588, 'inspector_authtype': 1, 'inspector_pass': '180CDC15E4801E55', 'is_follow': '', 'light_mark': 0, 'link_url': {'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=E9664C1FFA9B08D09C33DC5901307461&amp;userid=180CDC15E4801E55', 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=E9664C1FFA9B08D09C33DC5901307461&amp;userid=180CDC15E4801E55', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=E9664C1FFA9B08D09C33DC5901307461&amp;userid=180CDC15E4801E55'}, 'live_roomid': 'E9664C1FFA9B08D09C33DC5901307461', 'live_status': 0, 'manual_record': 0, 'max_streams': 7, 'max_users': 30, 'mergetype': 2, 'name': '首开小班课', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=E9664C1FFA9B08D09C33DC5901307461&amp;userid=180CDC15E4801E55', 'publisher_bitrate': 200, 'publisherpass': '234', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': 'E9664C1FFA9B08D09C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '180CDC15E4801E55', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=E9664C1FFA9B08D09C33DC5901307461&amp;userid=180CDC15E4801E55', 'templatetype': 1, 'userid': '180CDC15E4801E55', 'video_mode': 1, 'video_zoom': '', 'warm_open': '1', 'white_list': None}], 'total': 7}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_g_Detail_test.LiveClassAPIDetailTest: 获取房间信息接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c7',1)" class="detail" id='c7'>详细</a></td>
+</tr>
+
+<tr id='pt7_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_detail: 获取房间信息成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt7_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_1'>通过</button>
+    <div id='div_pt7_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt7_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_1'>通过</button>
+    <div id='div_pt7_1' class="collapse in">
+    <pre>
+    
+pt7_1: {'data': {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7d41cb9d8eb8398a3cb40c', 'audience_authtype': 2, 'audience_pass': '180CDC15E4801E55', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=83BC5BBFCF7ED07F9C33DC5901307461&amp;userid=180CDC15E4801E55', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-22', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 35635, 'inspector_authtype': 1, 'inspector_pass': '180CDC15E4801E55', 'is_follow': '', 'light_mark': 0, 'link_url': {'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=83BC5BBFCF7ED07F9C33DC5901307461&amp;userid=180CDC15E4801E55', 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=83BC5BBFCF7ED07F9C33DC5901307461&amp;userid=180CDC15E4801E55', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=83BC5BBFCF7ED07F9C33DC5901307461&amp;userid=180CDC15E4801E55'}, 'live_roomid': '83BC5BBFCF7ED07F9C33DC5901307461', 'live_status': 0, 'manual_record': 0, 'max_streams': 16, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-22 18_58_29', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=83BC5BBFCF7ED07F9C33DC5901307461&amp;userid=180CDC15E4801E55', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '83BC5BBFCF7ED07F9C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '180CDC15E4801E55', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=83BC5BBFCF7ED07F9C33DC5901307461&amp;userid=180CDC15E4801E55', 'templatetype': 1, 'userid': '180CDC15E4801E55', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_h_Link_test.LiveClassAPILinkTest: 获取房间登陆连接接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c8',1)" class="detail" id='c8'>详细</a></td>
+</tr>
+
+<tr id='pt8_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_link: 获取房间登陆连接成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt8_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt8_1'>通过</button>
+    <div id='div_pt8_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt8_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt8_1'>通过</button>
+    <div id='div_pt8_1' class="collapse in">
+    <pre>
+    
+pt8_1: {'data': {'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=83BC5BBFCF7ED07F9C33DC5901307461&amp;userid=180CDC15E4801E55', 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=83BC5BBFCF7ED07F9C33DC5901307461&amp;userid=180CDC15E4801E55', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=83BC5BBFCF7ED07F9C33DC5901307461&amp;userid=180CDC15E4801E55'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_i_SessionId_test.LiveClassAPICloseTest: 获取sessionid接口测试</td>
+    <td class="text-center">4</td>
+    <td class="text-center">4</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c9',4)" class="detail" id='c9'>详细</a></td>
+</tr>
+
+<tr id='pt9_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_role0: 获取sessionid成功：老师带密码</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt9_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt9_1'>通过</button>
+    <div id='div_pt9_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt9_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt9_1'>通过</button>
+    <div id='div_pt9_1' class="collapse in">
+    <pre>
+    
+pt9_1: {'data': {'sessionid': '140A1BE7964648BC6093C8EA79B50CC2CE57FE519BD236502A1B1520FC857E5B2978B53B55D9CEA8BF83DAA7B272341D', 'userid': 'd5797d751fa342f7ae7438db05ec22db'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt9_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_b_role1: 获取sessionid成功：互动</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt9_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt9_2'>通过</button>
+    <div id='div_pt9_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt9_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt9_2'>通过</button>
+    <div id='div_pt9_2' class="collapse in">
+    <pre>
+    
+pt9_2: {'data': {'sessionid': 'B5E50C229994C3CE3697EF1D2720C9C830D35617C63391000022312D904E18A72978B53B55D9CEA8D934CEEC1DD06175', 'userid': 'fa3dbc5b5fa042c29d8d12f53da6ae6b'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt9_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_c_role2: 获取sessionid成功：旁听</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt9_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt9_3'>通过</button>
+    <div id='div_pt9_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt9_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt9_3'>通过</button>
+    <div id='div_pt9_3' class="collapse in">
+    <pre>
+    
+pt9_3: {'data': {'sessionid': 'EA0A73904B29FB7CFC42CE1972EFA581D3F03E1A09D7411E67CBB666FE022AA22978B53B55D9CEA86E2C474585EDB5A0', 'userid': '5606c3cad403451a9766f78766819614'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt9_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_d_client1: 获取sessionid成功：移动端</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt9_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt9_4'>通过</button>
+    <div id='div_pt9_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt9_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt9_4'>通过</button>
+    <div id='div_pt9_4' class="collapse in">
+    <pre>
+    
+pt9_4: {'data': {'sessionid': '57FCB54D7B346646ECD8E7C9147434D2C63752F486A05D969636DD1C9B1A9A102978B53B55D9CEA8CAC33802462C6A0D', 'userid': '072c922af022489baafb56f0b78fa6ae'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_j_Chatmsg_test.LiveClassAPIChatmsgTest: 获取聊天信息接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c10',1)" class="detail" id='c10'>详细</a></td>
+</tr>
+
+<tr id='pt10_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_chatmsg: 获取聊天信息成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt10_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt10_1'>通过</button>
+    <div id='div_pt10_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt10_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt10_1'>通过</button>
+    <div id='div_pt10_1' class="collapse in">
+    <pre>
+    
+pt10_1: {'result': 'OK', 'count': 0, 'chatMsgs': []}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_k_Record_test.LiveClassAPIRecordTest: 查询回放列表接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c11',1)" class="detail" id='c11'>详细</a></td>
+</tr>
+
+<tr id='pt11_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_record: 查询回访列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt11_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt11_1'>通过</button>
+    <div id='div_pt11_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt11_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt11_1'>通过</button>
+    <div id='div_pt11_1' class="collapse in">
+    <pre>
+    
+pt11_1: {'result': 'OK', 'pageIndex': 1, 'count': 10, 'records': [{'id': '6CC379903DE14EBB', 'liveId': 'E5B45B284630BCBA', 'startTime': '2018-08-22 18:58:20', 'stopTime': '2018-08-22 18:58:28', 'recordStatus': 0, 'recordVideoStatus': 0, 'recordVideoId': '-1', 'replayUrl': '', 'offlinePackageUrl': '', 'offlinePackageMd5': '', 'templateType': 4, 'sourceType': 0}, {'id': '8705E43E12C5762D', 'liveId': '6CF5F38389215B7F', 'startTime': '2018-08-22 18:43:56', 'stopTime': '2018-08-22 18:44:04', 'recordStatus': 0, 'recordVideoStatus': 0, 'recordVideoId': '-1', 'replayUrl': '', 'offlinePackageUrl': '', 'offlinePackageMd5': '', 'templateType': 4, 'sourceType': 0}, {'id': '9C4DB0C92779B939', 'liveId': 'E354B226742DE3BA', 'startTime': '2018-08-22 18:30:16', 'stopTime': '2018-08-22 18:30:34', 'recordStatus': 0, 'recordVideoStatus': 0, 'recordVideoId': '-1', 'replayUrl': '', 'offlinePackageUrl': '', 'offlinePackageMd5': '', 'templateType': 4, 'sourceType': 0}, {'id': '39C2DA04698D8D3E', 'liveId': '299402A18C29EBF6', 'startTime': '2018-08-22 18:24:05', 'stopTime': '2018-08-22 18:24:10', 'recordStatus': 0, 'recordVideoStatus': 0, 'recordVideoId': '-1', 'replayUrl': '', 'offlinePackageUrl': '', 'offlinePackageMd5': '', 'templateType': 4, 'sourceType': 0}, {'id': 'E0AADAB234FB6B3D', 'liveId': '6AF2C2C15A524217', 'startTime': '2018-08-22 09:58:58', 'stopTime': '2018-08-22 10:00:16', 'recordStatus': 0, 'recordVideoStatus': 0, 'recordVideoId': '-1', 'replayUrl': '', 'offlinePackageUrl': '', 'offlinePackageMd5': '', 'templateType': 4, 'sourceType': 0}, {'id': 'A93AEE0A3768BF15', 'liveId': '00D1960EA0990D4E', 'startTime': '2018-08-21 18:38:35', 'stopTime': '2018-08-21 18:38:56', 'recordStatus': 0, 'recordVideoStatus': 0, 'recordVideoId': '-1', 'replayUrl': '', 'offlinePackageUrl': '', 'offlinePackageMd5': '', 'templateType': 4, 'sourceType': 0}, {'id': '5CB827C4E13B881D', 'liveId': '5C8320434D7597E1', 'startTime': '2018-08-21 17:59:14', 'stopTime': '2018-08-21 18:00:03', 'recordStatus': 0, 'recordVideoStatus': 0, 'recordVideoId': '-1', 'replayUrl': '', 'offlinePackageUrl': '', 'offlinePackageMd5': '', 'templateType': 4, 'sourceType': 0}, {'id': '85905EF46AF5CB01', 'liveId': 'A3C73F837CAEB484', 'startTime': '2018-08-21 17:58:32', 'stopTime': '2018-08-21 17:59:03', 'recordStatus': 0, 'recordVideoStatus': 0, 'recordVideoId': '-1', 'replayUrl': '', 'offlinePackageUrl': '', 'offlinePackageMd5': '', 'templateType': 4, 'sourceType': 0}, {'id': '2E361ACF80005406', 'liveId': '802ED8604F5470C3', 'startTime': '2018-08-21 17:40:57', 'stopTime': '2018-08-21 17:42:02', 'recordStatus': 0, 'recordVideoStatus': 0, 'recordVideoId': '-1', 'replayUrl': '', 'offlinePackageUrl': '', 'offlinePackageMd5': '', 'templateType': 4, 'sourceType': 0}, {'id': 'BC300E43456F4B70', 'liveId': 'E72E9E3ADD748FA9', 'startTime': '2018-07-11 17:33:31', 'stopTime': '2018-07-11 18:05:23', 'recordStatus': 1, 'recordVideoStatus': 3, 'recordVideoId': '7B9B5721C25914669C33DC5901307461', 'replayUrl': 'http://view.csslcloud.net/api/view/callback?roomid=E9664C1FFA9B08D09C33DC5901307461&amp;userid=180CDC15E4801E55&amp;liveid=E72E9E3ADD748FA9&amp;recordid=BC300E43456F4B70', 'offlinePackageUrl': 'http://ccr.csslcloud.net/180CDC15E4801E55/E9664C1FFA9B08D09C33DC5901307461/BC300E43456F4B70.ccr', 'offlinePackageMd5': 'CDA47B0ACB2D6231CBB64A7EFD7DB474', 'templateType': 4, 'sourceType': 0}]}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_l_Rearch_test.LiveClassAPISearchTest: 查询回放信息接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c12',1)" class="detail" id='c12'>详细</a></td>
+</tr>
+
+<tr id='pt12_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_search: 查询回放信息成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt12_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt12_1'>通过</button>
+    <div id='div_pt12_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt12_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt12_1'>通过</button>
+    <div id='div_pt12_1' class="collapse in">
+    <pre>
+    
+pt12_1: {'result': 'OK', 'record': {'id': 'E0AADAB234FB6B3D', 'liveId': '6AF2C2C15A524217', 'startTime': '2018-08-22 09:58:58', 'stopTime': '2018-08-22 10:00:16', 'recordStatus': 0, 'recordVideoStatus': 0, 'recordVideoId': '-1', 'replayUrl': '', 'downloadUrl': '', 'offlinePackageUrl': '', 'offlinePackageMd5': '', 'templateType': 4, 'sourceType': 0}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_m_Add_test.LiveClassAPIAddTest: 上传文档接口测试</td>
+    <td class="text-center">2</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c13',2)" class="detail" id='c13'>详细</a></td>
+</tr>
+
+<tr id='pt13_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_add: 获取文档上传信息表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt13_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt13_1'>通过</button>
+    <div id='div_pt13_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt13_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt13_1'>通过</button>
+    <div id='div_pt13_1' class="collapse in">
+    <pre>
+    
+pt13_1: {'data': {'upload_url': 'https://document.csslcloud.net/api/document/upload?docid=E0FACA4E105A4EA89C33DC5901307461&amp;userid=83F203DAC2468694'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt13_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_b_add: 文档上传成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt13_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt13_2'>通过</button>
+    <div id='div_pt13_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt13_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt13_2'>通过</button>
+    <div id='div_pt13_2' class="collapse in">
+    <pre>
+    
+pt13_2: {'datas': {'docId': 'E0FACA4E105A4EA89C33DC5901307461'}, 'errorCode': 0, 'success': True}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_n_Delete_test.LiveClassAPIDeleteTest: 删除文档接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c14',1)" class="detail" id='c14'>详细</a></td>
+</tr>
+
+<tr id='pt14_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 获取直播间列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt14_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt14_1'>通过</button>
+    <div id='div_pt14_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt14_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt14_1'>通过</button>
+    <div id='div_pt14_1' class="collapse in">
+    <pre>
+    
+pt14_1: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_o_DocList_test.LiveClassAPIDocListTest: 查询文档接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c15',1)" class="detail" id='c15'>详细</a></td>
+</tr>
+
+<tr id='pt15_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 获取共享文档列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt15_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt15_1'>通过</button>
+    <div id='div_pt15_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt15_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt15_1'>通过</button>
+    <div id='div_pt15_1' class="collapse in">
+    <pre>
+    
+pt15_1: {'current': 1, 'data': '', 'docs': [{'create_time': '2018-08-22 18:31:05', 'id': 'D76973C51B30914F9C33DC5901307461', 'mode': 0, 'name': 'test', 'pageSize': 0, 'roomId': '9F2252F04EC4874F9C33DC5901307461', 'size': 11588, 'status': -2, 'useSDK': 0}, {'create_time': '2018-08-22 16:11:42', 'id': 'BFCB1FA77234541E9C33DC5901307461', 'mode': 0, 'name': 'test', 'pageSize': 1, 'roomId': '9F2252F04EC4874F9C33DC5901307461', 'size': 11588, 'status': 1, 'useSDK': 0}, {'create_time': '2018-08-22 15:31:28', 'id': '1BDE2D7F8C9E35039C33DC5901307461', 'mode': 0, 'name': 'test', 'pageSize': 1, 'roomId': '9F2252F04EC4874F9C33DC5901307461', 'size': 11588, 'status': 1, 'useSDK': 0}, {'create_time': '2018-08-22 15:22:20', 'id': '5FB3CA8CB64437109C33DC5901307461', 'mode': 0, 'name': 'test', 'pageSize': 0, 'roomId': '9F2252F04EC4874F9C33DC5901307461', 'size': 11588, 'status': -2, 'useSDK': 0}, {'create_time': '2018-08-22 15:16:14', 'id': '9F527CBFEF4C72B99C33DC5901307461', 'mode': 0, 'name': 'test', 'pageSize': 1, 'roomId': '9F2252F04EC4874F9C33DC5901307461', 'size': 11588, 'status': 1, 'useSDK': 0}, {'create_time': '2018-08-22 15:16:14', 'id': 'D2565B3EA253A6009C33DC5901307461', 'mode': 0, 'name': 'test', 'pageSize': 0, 'roomId': '9F2252F04EC4874F9C33DC5901307461', 'size': 11588, 'status': -2, 'useSDK': 0}, {'create_time': '2018-08-22 15:14:38', 'id': '0281731B650E3E099C33DC5901307461', 'mode': 0, 'name': 'test', 'pageSize': 0, 'roomId': '9F2252F04EC4874F9C33DC5901307461', 'size': 11588, 'status': -2, 'useSDK': 0}, {'create_time': '2018-08-22 15:08:44', 'id': 'A188B4354C70A8979C33DC5901307461', 'mode': 0, 'name': 'test', 'pageSize': 0, 'roomId': '9F2252F04EC4874F9C33DC5901307461', 'size': 11588, 'status': -2, 'useSDK': 0}, {'create_time': '2018-08-22 15:07:30', 'id': 'FB0592FEFDF527669C33DC5901307461', 'mode': 0, 'name': 'test', 'pageSize': 0, 'roomId': '9F2252F04EC4874F9C33DC5901307461', 'size': 11588, 'status': -2, 'useSDK': 0}, {'create_time': '2018-08-22 15:06:51', 'id': '4D695244E5A92CBB9C33DC5901307461', 'mode': 0, 'name': 'test', 'pageSize': 0, 'roomId': '9F2252F04EC4874F9C33DC5901307461', 'size': 11588, 'status': -2, 'useSDK': 0}, {'create_time': '2018-08-22 14:57:34', 'id': '7108E62618B9DF2E9C33DC5901307461', 'mode': 0, 'name': 'test', 'pageSize': 0, 'roomId': '9F2252F04EC4874F9C33DC5901307461', 'size': 11588, 'status': -2, 'useSDK': 0}, {'create_time': '2018-07-11 17:16:24', 'id': '0F22DD574B9A15589C33DC5901307461', 'mode': None, 'name': '动画.ppt', 'pageSize': 5, 'roomId': '9F2252F04EC4874F9C33DC5901307461', 'size': 9147904, 'status': 1, 'useSDK': 1}, {'create_time': '2018-07-11 17:15:36', 'id': 'B3EB5C60DE0C87A29C33DC5901307461', 'mode': None, 'name': 'Testin一站式测试方案介绍_v2018.pdf', 'pageSize': 40, 'roomId': '9F2252F04EC4874F9C33DC5901307461', 'size': 8431070, 'status': 1, 'useSDK': 0}], 'picDomain': 'https://image.csslcloud.net', 'result': 'OK', 'total': 13}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_p_Auth_test.LiveClassAPIAuthTest: 获取房间文档列表接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c16',1)" class="detail" id='c16'>详细</a></td>
+</tr>
+
+<tr id='pt16_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 获取房间文档列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt16_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt16_1'>通过</button>
+    <div id='div_pt16_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt16_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt16_1'>通过</button>
+    <div id='div_pt16_1' class="collapse in">
+    <pre>
+    
+pt16_1: {'current': 1, 'data': '', 'docs': [{'create_time': '2018-07-11 17:15:36', 'id': 'B3EB5C60DE0C87A29C33DC5901307461', 'mode': None, 'name': 'Testin一站式测试方案介绍_v2018.pdf', 'pageSize': 40, 'roomId': '9F2252F04EC4874F9C33DC5901307461', 'size': 8431070, 'status': 1, 'useSDK': 0}], 'picDomain': 'https://image.csslcloud.net', 'result': 'OK', 'total': 1}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_q_Relate_test.LiveClassAPIRelateTest: 文档关联接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c17',1)" class="detail" id='c17'>详细</a></td>
+</tr>
+
+<tr id='pt17_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 文档关联成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt17_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt17_1'>通过</button>
+    <div id='div_pt17_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt17_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt17_1'>通过</button>
+    <div id='div_pt17_1' class="collapse in">
+    <pre>
+    
+pt17_1: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_r_Unrelate_test.LiveClassAPIUnrelateTest: 取消文档关联接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c18',1)" class="detail" id='c18'>详细</a></td>
+</tr>
+
+<tr id='pt18_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 取消文档关联成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt18_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt18_1'>通过</button>
+    <div id='div_pt18_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt18_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt18_1'>通过</button>
+    <div id='div_pt18_1' class="collapse in">
+    <pre>
+    
+pt18_1: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_s_Video_test.LiveClassAPIVideoTest: 上传视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c19',1)" class="detail" id='c19'>详细</a></td>
+</tr>
+
+<tr id='pt19_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 生成上传接口成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt19_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt19_1'>通过</button>
+    <div id='div_pt19_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt19_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt19_1'>通过</button>
+    <div id='div_pt19_1' class="collapse in">
+    <pre>
+    
+pt19_1: {'success': 'true', 'videoUploadInfo': {'chunkurl': 'https://2-30-vacombiner.bokecc.com/servlet/uploadchunk/v2', 'createtime': '2018-08-22', 'encodetype': '100+101+102+210+220', 'logotype': None, 'metaurl': 'https://2-30-vacombiner.bokecc.com/servlet/uploadmeta/v2', 'priority': '3', 'server': 'http://2-30-vacombiner.bokecc.com/', 'servicetype': '100', 'userid': '180CDC15E4801E55', 'videoid': 'E0E4EC33FA97093A9C33DC5901307461'}}
+{'success': 'true', 'videoUploadInfo': {'chunkurl': 'https://2-30-vacombiner.bokecc.com/servlet/uploadchunk/v2', 'createtime': '2018-08-22', 'encodetype': '100+101+102+210+220', 'logotype': None, 'metaurl': 'https://2-30-vacombiner.bokecc.com/servlet/uploadmeta/v2', 'priority': '3', 'server': 'http://2-30-vacombiner.bokecc.com/', 'servicetype': '100', 'userid': '180CDC15E4801E55', 'videoid': 'E0E4EC33FA97093A9C33DC5901307461'}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_t_Video_test.LiveClassAPIVideoTest: 关联视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c20',1)" class="detail" id='c20'>详细</a></td>
+</tr>
+
+<tr id='pt20_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 生成上传接口成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt20_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt20_1'>通过</button>
+    <div id='div_pt20_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt20_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt20_1'>通过</button>
+    <div id='div_pt20_1' class="collapse in">
+    <pre>
+    
+pt20_1: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_u_Video_test.LiveClassAPIVideoTest: 查询房间已关联的媒体接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c21',1)" class="detail" id='c21'>详细</a></td>
+</tr>
+
+<tr id='pt21_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 查询房间已关联的媒体成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt21_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt21_1'>通过</button>
+    <div id='div_pt21_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt21_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt21_1'>通过</button>
+    <div id='div_pt21_1' class="collapse in">
+    <pre>
+    
+pt21_1: {'result': 'OK', 'videos': {'total': 1, 'video': [{'category': 'B8059BF186B33E37', 'creation-time': '2018-08-22 17:50:39', 'desp': '', 'duration': 7, 'filesize': 871432, 'hasvideofile': 0, 'id': '830603017655784C9C33DC5901307461', 'is_warm': 0, 'isvalid': 0, 'mediaType': 1, 'playurl': '', 'status': 0, 'tags': ' ', 'title': 'autotest001.mp4', 'type': 10, 'uploaduserid': '180CDC15E4801E55', 'userid': '180CDC15E4801E55'}]}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_v_Video_test.LiveClassAPIVideoTest: 设为暖场视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c22',1)" class="detail" id='c22'>详细</a></td>
+</tr>
+
+<tr id='pt22_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 设为暖场视频成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt22_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt22_1'>通过</button>
+    <div id='div_pt22_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt22_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt22_1'>通过</button>
+    <div id='div_pt22_1' class="collapse in">
+    <pre>
+    
+pt22_1: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_w_Video_test.LiveClassAPIVideoTest: 取消暖场视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c23',1)" class="detail" id='c23'>详细</a></td>
+</tr>
+
+<tr id='pt23_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 取消暖场视频成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt23_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt23_1'>通过</button>
+    <div id='div_pt23_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt23_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt23_1'>通过</button>
+    <div id='div_pt23_1' class="collapse in">
+    <pre>
+    
+pt23_1: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_x_Video_test.LiveClassAPIVideoTest: 取消关联视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c24',1)" class="detail" id='c24'>详细</a></td>
+</tr>
+
+<tr id='pt24_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 取消关联视频成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt24_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt24_1'>通过</button>
+    <div id='div_pt24_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt24_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt24_1'>通过</button>
+    <div id='div_pt24_1' class="collapse in">
+    <pre>
+    
+pt24_1: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_z_Close_test.LiveClassAPICloseTest: 关闭直播间接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c25',1)" class="detail" id='c25'>详细</a></td>
+</tr>
+
+<tr id='pt25_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_update: 关闭直播间成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt25_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt25_1'>通过</button>
+    <div id='div_pt25_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt25_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt25_1'>通过</button>
+    <div id='div_pt25_1' class="collapse in">
+    <pre>
+    
+pt25_1: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='total_row' class="text-center active">
+    <td>总计</td>
+    <td>29</td>
+    <td>29</td>
+    <td>0</td>
+    <td>0</td>
+    <td>通过率：100.00%</td>
+</tr>
+</table>
+
+<div id='ending'>&nbsp;</div>
+    <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+    <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+    </span></a></div>
+    
+</body>
+</html>

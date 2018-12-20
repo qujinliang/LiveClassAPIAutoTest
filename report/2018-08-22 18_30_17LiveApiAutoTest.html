@@ -1,0 +1,1095 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>LiveClassAPI接口测试</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2.2"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+<style type="text/css" media="screen">
+body        { font-family: Microsoft YaHei,Tahoma,arial,helvetica,sans-serif;padding: 20px; font-size: 80%; }
+table       { font-size: 100%; }
+/* -- heading ---------------------------------------------------------------------- */
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+/* -- report ------------------------------------------------------------------------ */
+#total_row  { font-weight: bold; }
+.passCase   { color: #5cb85c; }
+.failCase   { color: #d9534f; font-weight: bold; }
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+</style>
+
+</head>
+<body >
+<script language="javascript" type="text/javascript">
+output_list = Array();
+/*level 调整增加只显示通过用例的分类 --Findyou
+0:Summary //all hiddenRow
+1:Failed  //pt hiddenRow, ft none
+2:Pass    //pt none, ft hiddenRow
+3:All     //pt none, ft none
+*/
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level == 2 || level == 0 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level < 2) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+    }
+    //加入【详细】切换文字变化 --Findyou
+    detail_class=document.getElementsByClassName('detail');
+	//console.log(detail_class.length)
+	if (level == 3) {
+		for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="收起"
+		}
+	}
+	else{
+			for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="详细"
+		}
+	}
+}
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        //ID修改 点 为 下划线 -Findyou
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+        if (toHide) {
+            document.getElementById(tid).className = 'hiddenRow';
+            document.getElementById(cid).innerText = "详细"
+        }
+        else {
+            document.getElementById(tid).className = '';
+            document.getElementById(cid).innerText = "收起"
+        }
+    }
+}
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+</script>
+<div class='heading'>
+<h1 style="font-family: Microsoft YaHei">LiveClassAPI接口测试</h1>
+<p class='attribute'><strong>开始时间 : </strong> 2018-08-22 18:30:17</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:54.263094</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 29，通过 1，失败 2，错误 26，通过率= 3.45%</p>
+
+<p class='description'>详情请下载附件查看：</p>
+</div>
+
+
+<p id='show_detail_line'>
+<a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 3.45% }</a>
+<a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 2 }</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过{ 1 }</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 29 }</a>
+</p>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 14px;">
+    <td>报告列表</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>失败</td>
+    <td>错误</td>
+    <td>详细</td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_a_Start_test.LiveClassAPIStartTest: 开始直播接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',1)" class="detail" id='c1'>详细</a></td>
+</tr>
+
+<tr id='ft1_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_start: 开始直播成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_1'>错误</button>
+    <div id='div_ft1_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_1'>错误</button>
+    <div id='div_ft1_1' class="collapse in">
+    <pre>
+    
+ft1_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_a_Start_test.py", line 24, in test_a_start
+    r = self.live.SendOut(self,self.start_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_b_Stop_test.LiveClassAPIStopTest: 停止直播接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c2',1)" class="detail" id='c2'>详细</a></td>
+</tr>
+
+<tr id='pt2_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_stop: 停止直播成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse in">
+    <pre>
+    
+pt2_1: HTTPConnectionPool(host='ccapi.csslcloud.net', port=80): Max retries exceeded with url: /api/room/live/stop?roomid=E9664C1FFA9B08D09C33DC5901307461&amp;userid=180CDC15E4801E55&amp;time=1534933817&amp;hash=5642BC70A60359C8C8B70D9D6B5328CD (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.HTTPConnection object at 0x000001EEED53B8D0&gt;: Failed to establish a new connection: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。'))
+没有返回数据，执行失败
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_c_Create_test.LiveClassAPICreateTest: 创建直播间接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c3',1)" class="detail" id='c3'>详细</a></td>
+</tr>
+
+<tr id='ft3_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_create: 创建直播间成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft3_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft3_1'>错误</button>
+    <div id='div_ft3_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft3_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft3_1'>错误</button>
+    <div id='div_ft3_1' class="collapse in">
+    <pre>
+    
+ft3_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_c_Create_test.py", line 24, in test_a_create
+    r = self.live.SendOut(self,self.create_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_d_Update_test.LiveClassAPIUpdateTest: 编辑直播间接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c4',1)" class="detail" id='c4'>详细</a></td>
+</tr>
+
+<tr id='ft4_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_update: 更新直播间成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft4_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_1'>失败</button>
+    <div id='div_ft4_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft4_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_1'>失败</button>
+    <div id='div_ft4_1' class="collapse in">
+    <pre>
+    
+ft4_1: {'errorMsg': 'APIException: 调用直播live接口出错', 'result': 'FAIL'}
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_d_Update_test.py", line 29, in test_a_update
+    self.assertEqual(r['result'],'OK')
+AssertionError: 'FAIL' != 'OK'
+- FAIL
++ OK
+
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_e_SetSingle_test.LiveClassAPISetTest: 切换合流布局模式接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c5',1)" class="detail" id='c5'>详细</a></td>
+</tr>
+
+<tr id='ft5_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_setSingle: 切换合流布局模式成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft5_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft5_1'>错误</button>
+    <div id='div_ft5_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft5_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft5_1'>错误</button>
+    <div id='div_ft5_1' class="collapse in">
+    <pre>
+    
+ft5_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_e_SetSingle_test.py", line 24, in test_a_setSingle
+    r = self.live.SendOut(self,self.setSingle_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_f_List_test.LiveClassAPIListTest: 获取直播间列表接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c6',1)" class="detail" id='c6'>详细</a></td>
+</tr>
+
+<tr id='ft6_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 获取直播间列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_1'>错误</button>
+    <div id='div_ft6_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_1'>错误</button>
+    <div id='div_ft6_1' class="collapse in">
+    <pre>
+    
+ft6_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_f_List_test.py", line 24, in test_a_list
+    r = self.live.SendOut(self,self.list_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_g_Detail_test.LiveClassAPIDetailTest: 获取房间信息接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c7',1)" class="detail" id='c7'>详细</a></td>
+</tr>
+
+<tr id='ft7_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_detail: 获取房间信息成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft7_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft7_1'>错误</button>
+    <div id='div_ft7_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft7_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft7_1'>错误</button>
+    <div id='div_ft7_1' class="collapse in">
+    <pre>
+    
+ft7_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_g_Detail_test.py", line 24, in test_a_detail
+    r = self.live.SendOut(self,self.detail_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_h_Link_test.LiveClassAPILinkTest: 获取房间登陆连接接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c8',1)" class="detail" id='c8'>详细</a></td>
+</tr>
+
+<tr id='ft8_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_link: 获取房间登陆连接成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft8_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft8_1'>错误</button>
+    <div id='div_ft8_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft8_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft8_1'>错误</button>
+    <div id='div_ft8_1' class="collapse in">
+    <pre>
+    
+ft8_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_h_Link_test.py", line 24, in test_a_link
+    r = self.live.SendOut(self,self.link_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_i_SessionId_test.LiveClassAPICloseTest: 获取sessionid接口测试</td>
+    <td class="text-center">4</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">4</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c9',4)" class="detail" id='c9'>详细</a></td>
+</tr>
+
+<tr id='ft9_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_role0: 获取sessionid成功：老师带密码</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft9_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft9_1'>错误</button>
+    <div id='div_ft9_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft9_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft9_1'>错误</button>
+    <div id='div_ft9_1' class="collapse in">
+    <pre>
+    
+ft9_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_i_SessionId_test.py", line 31, in test_a_role0
+    r = self.live.SendOut(self,self.role0_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft9_2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_b_role1: 获取sessionid成功：互动</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft9_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft9_2'>错误</button>
+    <div id='div_ft9_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft9_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft9_2'>错误</button>
+    <div id='div_ft9_2' class="collapse in">
+    <pre>
+    
+ft9_2: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_i_SessionId_test.py", line 40, in test_b_role1
+    r = self.live.SendOut(self,self.role1_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft9_3' class='none'>
+    <td class='errorCase'><div class='testcase'>test_c_role2: 获取sessionid成功：旁听</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft9_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft9_3'>错误</button>
+    <div id='div_ft9_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft9_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft9_3'>错误</button>
+    <div id='div_ft9_3' class="collapse in">
+    <pre>
+    
+ft9_3: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_i_SessionId_test.py", line 49, in test_c_role2
+    r = self.live.SendOut(self,self.role2_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft9_4' class='none'>
+    <td class='errorCase'><div class='testcase'>test_d_client1: 获取sessionid成功：移动端</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft9_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft9_4'>错误</button>
+    <div id='div_ft9_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft9_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft9_4'>错误</button>
+    <div id='div_ft9_4' class="collapse in">
+    <pre>
+    
+ft9_4: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_i_SessionId_test.py", line 58, in test_d_client1
+    r = self.live.SendOut(self,self.client_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_j_Chatmsg_test.LiveClassAPIChatmsgTest: 获取聊天信息接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c10',1)" class="detail" id='c10'>详细</a></td>
+</tr>
+
+<tr id='ft10_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_chatmsg: 获取聊天信息成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft10_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft10_1'>错误</button>
+    <div id='div_ft10_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft10_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft10_1'>错误</button>
+    <div id='div_ft10_1' class="collapse in">
+    <pre>
+    
+ft10_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_j_Chatmsg_test.py", line 24, in test_a_chatmsg
+    r = self.live.SendOut(self,self.chatmsg_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_k_Record_test.LiveClassAPIRecordTest: 查询回放列表接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c11',1)" class="detail" id='c11'>详细</a></td>
+</tr>
+
+<tr id='ft11_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_record: 查询回访列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft11_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft11_1'>错误</button>
+    <div id='div_ft11_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft11_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft11_1'>错误</button>
+    <div id='div_ft11_1' class="collapse in">
+    <pre>
+    
+ft11_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_k_Record_test.py", line 24, in test_a_record
+    r = self.live.SendOut(self,self.record_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_l_Rearch_test.LiveClassAPISearchTest: 查询回放信息接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c12',1)" class="detail" id='c12'>详细</a></td>
+</tr>
+
+<tr id='ft12_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_search: 查询回放信息成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft12_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft12_1'>错误</button>
+    <div id='div_ft12_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft12_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft12_1'>错误</button>
+    <div id='div_ft12_1' class="collapse in">
+    <pre>
+    
+ft12_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_l_Rearch_test.py", line 24, in test_a_search
+    r = self.live.SendOut(self,self.search_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_m_Add_test.LiveClassAPIAddTest: 上传文档接口测试</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">2</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c13',2)" class="detail" id='c13'>详细</a></td>
+</tr>
+
+<tr id='ft13_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_add: 获取文档上传信息表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft13_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft13_1'>错误</button>
+    <div id='div_ft13_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft13_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft13_1'>错误</button>
+    <div id='div_ft13_1' class="collapse in">
+    <pre>
+    
+ft13_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_m_Add_test.py", line 27, in test_a_add
+    r = self.live.SendOut(self,self.add_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft13_2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_b_add: 文档上传成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft13_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft13_2'>错误</button>
+    <div id='div_ft13_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft13_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft13_2'>错误</button>
+    <div id='div_ft13_2' class="collapse in">
+    <pre>
+    
+ft13_2: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_m_Add_test.py", line 40, in test_b_add
+    response = requests.request("POST",ADDURL,files=files)
+  File "F:\LiveClassAPIAutoTest\venv\lib\site-packages\pip-9.0.1-py3.7.egg\pip\_vendor\requests\api.py", line 56, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "F:\LiveClassAPIAutoTest\venv\lib\site-packages\pip-9.0.1-py3.7.egg\pip\_vendor\requests\sessions.py", line 461, in request
+    prep = self.prepare_request(req)
+  File "F:\LiveClassAPIAutoTest\venv\lib\site-packages\pip-9.0.1-py3.7.egg\pip\_vendor\requests\sessions.py", line 394, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "F:\LiveClassAPIAutoTest\venv\lib\site-packages\pip-9.0.1-py3.7.egg\pip\_vendor\requests\models.py", line 294, in prepare
+    self.prepare_url(url, params)
+  File "F:\LiveClassAPIAutoTest\venv\lib\site-packages\pip-9.0.1-py3.7.egg\pip\_vendor\requests\models.py", line 354, in prepare_url
+    raise MissingSchema(error)
+pip._vendor.requests.exceptions.MissingSchema: Invalid URL '': No schema supplied. Perhaps you meant http://?
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_n_Delete_test.LiveClassAPIDeleteTest: 删除文档接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c14',1)" class="detail" id='c14'>详细</a></td>
+</tr>
+
+<tr id='ft14_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_list: 获取直播间列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft14_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft14_1'>失败</button>
+    <div id='div_ft14_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft14_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft14_1'>失败</button>
+    <div id='div_ft14_1' class="collapse in">
+    <pre>
+    
+ft14_1: {'errorMsg': '', 'result': 'FAIL'}
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_n_Delete_test.py", line 29, in test_a_list
+    self.assertEqual(r['result'],'OK')
+AssertionError: 'FAIL' != 'OK'
+- FAIL
++ OK
+
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_o_DocList_test.LiveClassAPIDocListTest: 查询文档接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c15',1)" class="detail" id='c15'>详细</a></td>
+</tr>
+
+<tr id='ft15_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 获取共享文档列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft15_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft15_1'>错误</button>
+    <div id='div_ft15_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft15_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft15_1'>错误</button>
+    <div id='div_ft15_1' class="collapse in">
+    <pre>
+    
+ft15_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_o_DocList_test.py", line 25, in test_a_list
+    r = self.live.SendOut(self,self.doc_list_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_p_Auth_test.LiveClassAPIAuthTest: 获取房间文档列表接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c16',1)" class="detail" id='c16'>详细</a></td>
+</tr>
+
+<tr id='ft16_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 获取房间文档列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft16_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft16_1'>错误</button>
+    <div id='div_ft16_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft16_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft16_1'>错误</button>
+    <div id='div_ft16_1' class="collapse in">
+    <pre>
+    
+ft16_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_p_Auth_test.py", line 24, in test_a_list
+    r = self.live.SendOut(self,self.auth_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_q_Relate_test.LiveClassAPIRelateTest: 文档关联接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c17',1)" class="detail" id='c17'>详细</a></td>
+</tr>
+
+<tr id='ft17_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 文档关联成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft17_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft17_1'>错误</button>
+    <div id='div_ft17_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft17_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft17_1'>错误</button>
+    <div id='div_ft17_1' class="collapse in">
+    <pre>
+    
+ft17_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_q_Relate_test.py", line 24, in test_a_list
+    r = self.live.SendOut(self,self.relate_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_r_Unrelate_test.LiveClassAPIUnrelateTest: 取消文档关联接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c18',1)" class="detail" id='c18'>详细</a></td>
+</tr>
+
+<tr id='ft18_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 取消文档关联成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft18_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft18_1'>错误</button>
+    <div id='div_ft18_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft18_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft18_1'>错误</button>
+    <div id='div_ft18_1' class="collapse in">
+    <pre>
+    
+ft18_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_r_Unrelate_test.py", line 24, in test_a_list
+    r = self.live.SendOut(self,self.unrelate_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_s_Video_test.LiveClassAPIVideoTest: 上传视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c19',1)" class="detail" id='c19'>详细</a></td>
+</tr>
+
+<tr id='ft19_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 生成上传接口成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft19_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft19_1'>错误</button>
+    <div id='div_ft19_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft19_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft19_1'>错误</button>
+    <div id='div_ft19_1' class="collapse in">
+    <pre>
+    
+ft19_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_s_Video_test.py", line 24, in test_a_list
+    r = self.live.SendOut(self,self.create_info_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'result'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_t_Video_test.LiveClassAPIVideoTest: 关联视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c20',1)" class="detail" id='c20'>详细</a></td>
+</tr>
+
+<tr id='ft20_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 生成上传接口成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft20_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft20_1'>错误</button>
+    <div id='div_ft20_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft20_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft20_1'>错误</button>
+    <div id='div_ft20_1' class="collapse in">
+    <pre>
+    
+ft20_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_t_Video_test.py", line 24, in test_a_list
+    r = self.live.SendOut(self,self.video_relate_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_u_Video_test.LiveClassAPIVideoTest: 查询房间已关联的媒体接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c21',1)" class="detail" id='c21'>详细</a></td>
+</tr>
+
+<tr id='ft21_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 查询房间已关联的媒体成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft21_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft21_1'>错误</button>
+    <div id='div_ft21_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft21_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft21_1'>错误</button>
+    <div id='div_ft21_1' class="collapse in">
+    <pre>
+    
+ft21_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_u_Video_test.py", line 24, in test_a_list
+    r = self.live.SendOut(self,self.onrelated_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_v_Video_test.LiveClassAPIVideoTest: 设为暖场视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c22',1)" class="detail" id='c22'>详细</a></td>
+</tr>
+
+<tr id='ft22_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 设为暖场视频成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft22_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft22_1'>错误</button>
+    <div id='div_ft22_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft22_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft22_1'>错误</button>
+    <div id='div_ft22_1' class="collapse in">
+    <pre>
+    
+ft22_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_v_Video_test.py", line 24, in test_a_list
+    r = self.live.SendOut(self,self.warm_set_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_w_Video_test.LiveClassAPIVideoTest: 取消暖场视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c23',1)" class="detail" id='c23'>详细</a></td>
+</tr>
+
+<tr id='ft23_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 取消暖场视频成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft23_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft23_1'>错误</button>
+    <div id='div_ft23_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft23_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft23_1'>错误</button>
+    <div id='div_ft23_1' class="collapse in">
+    <pre>
+    
+ft23_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_w_Video_test.py", line 24, in test_a_list
+    r = self.live.SendOut(self,self.warm_unset_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_x_Video_test.LiveClassAPIVideoTest: 取消关联视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c24',1)" class="detail" id='c24'>详细</a></td>
+</tr>
+
+<tr id='ft24_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 取消关联视频成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft24_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft24_1'>错误</button>
+    <div id='div_ft24_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft24_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft24_1'>错误</button>
+    <div id='div_ft24_1' class="collapse in">
+    <pre>
+    
+ft24_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_x_Video_test.py", line 24, in test_a_list
+    r = self.live.SendOut(self,self.video_unrelate_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_z_Close_test.LiveClassAPICloseTest: 关闭直播间接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c25',1)" class="detail" id='c25'>详细</a></td>
+</tr>
+
+<tr id='ft25_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_update: 关闭直播间成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft25_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft25_1'>错误</button>
+    <div id='div_ft25_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft25_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft25_1'>错误</button>
+    <div id='div_ft25_1' class="collapse in">
+    <pre>
+    
+ft25_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_z_Close_test.py", line 24, in test_a_update
+    r = self.live.SendOut(self,self.close_url)
+  File "F:\LiveClassAPIAutoTest\util\LiveAPIRequests.py", line 18, in SendOut
+    if self.r['result'] != 'OK' or self.r['reason'] == 'database error':
+KeyError: 'reason'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='total_row' class="text-center active">
+    <td>总计</td>
+    <td>29</td>
+    <td>1</td>
+    <td>2</td>
+    <td>26</td>
+    <td>通过率：3.45%</td>
+</tr>
+</table>
+
+<div id='ending'>&nbsp;</div>
+    <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+    <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+    </span></a></div>
+    
+</body>
+</html>

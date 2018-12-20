@@ -1,0 +1,1324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>LiveClassAPI接口测试</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2.2"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+<style type="text/css" media="screen">
+body        { font-family: Microsoft YaHei,Tahoma,arial,helvetica,sans-serif;padding: 20px; font-size: 80%; }
+table       { font-size: 100%; }
+/* -- heading ---------------------------------------------------------------------- */
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+/* -- report ------------------------------------------------------------------------ */
+#total_row  { font-weight: bold; }
+.passCase   { color: #5cb85c; }
+.failCase   { color: #d9534f; font-weight: bold; }
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+</style>
+
+</head>
+<body >
+<script language="javascript" type="text/javascript">
+output_list = Array();
+/*level 调整增加只显示通过用例的分类 --Findyou
+0:Summary //all hiddenRow
+1:Failed  //pt hiddenRow, ft none
+2:Pass    //pt none, ft hiddenRow
+3:All     //pt none, ft none
+*/
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level == 2 || level == 0 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level < 2) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+    }
+    //加入【详细】切换文字变化 --Findyou
+    detail_class=document.getElementsByClassName('detail');
+	//console.log(detail_class.length)
+	if (level == 3) {
+		for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="收起"
+		}
+	}
+	else{
+			for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="详细"
+		}
+	}
+}
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        //ID修改 点 为 下划线 -Findyou
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+        if (toHide) {
+            document.getElementById(tid).className = 'hiddenRow';
+            document.getElementById(cid).innerText = "详细"
+        }
+        else {
+            document.getElementById(tid).className = '';
+            document.getElementById(cid).innerText = "收起"
+        }
+    }
+}
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+</script>
+<div class='heading'>
+<h1 style="font-family: Microsoft YaHei">LiveClassAPI接口测试</h1>
+<p class='attribute'><strong>开始时间 : </strong> 2018-08-24 16:07:08</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:10.303104</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 38，失败 35，错误 3，通过率= 0.00%</p>
+
+<p class='description'>详情请下载附件查看：</p>
+</div>
+
+
+<p id='show_detail_line'>
+<a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 0.00% }</a>
+<a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 35 }</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过{ 0 }</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 38 }</a>
+</p>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 14px;">
+    <td>报告列表</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>失败</td>
+    <td>错误</td>
+    <td>详细</td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_a_Create_test.LiveClassAPICreateTest: 创建直播间接口测试</td>
+    <td class="text-center">4</td>
+    <td class="text-center">0</td>
+    <td class="text-center">4</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',4)" class="detail" id='c1'>详细</a></td>
+</tr>
+
+<tr id='ft1_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_create: 创建直播间成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_1'>失败</button>
+    <div id='div_ft1_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_1'>失败</button>
+    <div id='div_ft1_1' class="collapse in">
+    <pre>
+    
+ft1_1: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/create?audience_authtype=2&amp;desc=autoTestCreateRoom&amp;name=autoTestCreate2018-08-24+16_07_08&amp;publisherpass=123&amp;room_type=2&amp;talker_authtype=2&amp;userid=99BB96FA148B8FAB&amp;time=1535098028&amp;hash=8E6E02674648F376D6E367B1992598A2 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4C9128&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_a_Create_test.py", line 38, in test_a_create
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft1_2' class='none'>
+    <td class='failCase'><div class='testcase'>test_b_create: 创建直播间：全填</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_2'>失败</button>
+    <div id='div_ft1_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_2'>失败</button>
+    <div id='div_ft1_2' class="collapse in">
+    <pre>
+    
+ft1_2: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/create?audience_authtype=2&amp;audience_pass=321&amp;classtype=2&amp;desc=autoTestCreateRoom&amp;desktop_audio=1&amp;inspector_authtype=2&amp;inspector_pass=123&amp;light_mark=1&amp;manual_record=1&amp;max_streams=1&amp;max_users=15&amp;mergetype=1&amp;name=autoTestCreate2018-08-24+16_07_08&amp;ppt_support=True&amp;presenter_out=True&amp;publisher_bitrate=500&amp;publisherpass=123&amp;record_bitrate=0&amp;room_type=2&amp;screen_lock=1&amp;show_exit=0&amp;talker_authtype=2&amp;talker_bitrate=500&amp;talker_pass=123&amp;templatetype=1&amp;userid=99BB96FA148B8FAB&amp;video_mode=2&amp;warm_open=1&amp;time=1535098028&amp;hash=403DFDBA64D326582601B95C0C58C826 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4BEFD0&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_a_Create_test.py", line 54, in test_b_create
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft1_3' class='none'>
+    <td class='failCase'><div class='testcase'>test_c_create: 创建直播间：白名单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_3'>失败</button>
+    <div id='div_ft1_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_3'>失败</button>
+    <div id='div_ft1_3' class="collapse in">
+    <pre>
+    
+ft1_3: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/create?name=autoTestCreate2018-08-24+16_07_08&amp;publisherpass=123&amp;room_type=2&amp;talker_authtype=3&amp;userid=99BB96FA148B8FAB&amp;white_list=%7B%27user%27%3A%27123%27%7D&amp;time=1535098028&amp;hash=E1B4D483EA25EF2993A99B56EAEDAF48 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4D6198&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_a_Create_test.py", line 69, in test_c_create
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft1_4' class='none'>
+    <td class='failCase'><div class='testcase'>test_d_create: 创建直播间：超范围参数</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_4'>失败</button>
+    <div id='div_ft1_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_4'>失败</button>
+    <div id='div_ft1_4' class="collapse in">
+    <pre>
+    
+ft1_4: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/create?name=autoTestCreate2018-08-24+16_07_08&amp;publisherpass=123&amp;room_type=5&amp;talker_authtype=2&amp;userid=99BB96FA148B8FAB&amp;time=1535098028&amp;hash=380CDD006464881B8C9EAC9E24F996F7 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4D6320&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_a_Create_test.py", line 84, in test_d_create
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_b_Start_test.LiveClassAPIStartTest: 开始直播接口测试</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c2',2)" class="detail" id='c2'>详细</a></td>
+</tr>
+
+<tr id='ft2_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_start: 开始直播成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_1'>失败</button>
+    <div id='div_ft2_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_1'>失败</button>
+    <div id='div_ft2_1' class="collapse in">
+    <pre>
+    
+ft2_1: 'userid'
+HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/live/start?roomid=42A8012C26122E399C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098028&amp;hash=9BD96BB14A0EF00FF3F8611D82C5700F (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4D6320&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_b_Start_test.py", line 33, in test_a_start
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_2' class='none'>
+    <td class='failCase'><div class='testcase'>test_b_start: 开始直播成功：不传userid</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_2'>失败</button>
+    <div id='div_ft2_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_2'>失败</button>
+    <div id='div_ft2_2' class="collapse in">
+    <pre>
+    
+ft2_2: 'userid'
+HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/live/start?roomid=AA86A607E163A5A49C33DC5901307461&amp;time=1535098028&amp;hash=EB264F9A593579A35B66D1214416FE88 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4D60B8&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_b_Start_test.py", line 49, in test_b_start
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_c_Stop_test.LiveClassAPIStopTest: 停止直播接口测试</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c3',2)" class="detail" id='c3'>详细</a></td>
+</tr>
+
+<tr id='ft3_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_stop: 停止直播成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft3_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft3_1'>失败</button>
+    <div id='div_ft3_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft3_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft3_1'>失败</button>
+    <div id='div_ft3_1' class="collapse in">
+    <pre>
+    
+ft3_1: 'userid'
+HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/live/stop?roomid=42A8012C26122E399C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098028&amp;hash=9BD96BB14A0EF00FF3F8611D82C5700F (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4D60B8&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_c_Stop_test.py", line 33, in test_a_stop
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft3_2' class='none'>
+    <td class='failCase'><div class='testcase'>test_b_stop: 停止直播成功:不传userid</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft3_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft3_2'>失败</button>
+    <div id='div_ft3_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft3_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft3_2'>失败</button>
+    <div id='div_ft3_2' class="collapse in">
+    <pre>
+    
+ft3_2: 'userid'
+HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/live/stop?roomid=AA86A607E163A5A49C33DC5901307461&amp;time=1535098033&amp;hash=4E207AFD7A3513D377B3FA1E074C6692 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4D6320&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_c_Stop_test.py", line 46, in test_b_stop
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_d_Update_test.LiveClassAPIUpdateTest: 编辑直播间接口测试</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">2</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c4',2)" class="detail" id='c4'>详细</a></td>
+</tr>
+
+<tr id='ft4_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_update: 更新直播间:成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft4_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_1'>错误</button>
+    <div id='div_ft4_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft4_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_1'>错误</button>
+    <div id='div_ft4_1' class="collapse in">
+    <pre>
+    
+ft4_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_d_Update_test.py", line 15, in setUp
+    self.update_data,self.bat_update_data = data[0].data[1]
+AttributeError: 'dict' object has no attribute 'data'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft4_2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_b_update: 更新直播间:超范围</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft4_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_2'>错误</button>
+    <div id='div_ft4_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft4_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_2'>错误</button>
+    <div id='div_ft4_2' class="collapse in">
+    <pre>
+    
+ft4_2: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_d_Update_test.py", line 15, in setUp
+    self.update_data,self.bat_update_data = data[0].data[1]
+AttributeError: 'dict' object has no attribute 'data'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_e_SetSingle_test.LiveClassAPISetTest: 切换合流布局模式接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c5',1)" class="detail" id='c5'>详细</a></td>
+</tr>
+
+<tr id='ft5_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_setSingle: 切换合流布局模式成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft5_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft5_1'>失败</button>
+    <div id='div_ft5_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft5_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft5_1'>失败</button>
+    <div id='div_ft5_1' class="collapse in">
+    <pre>
+    
+ft5_1: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/set_single?roomid=AA86A607E163A5A49C33DC5901307461&amp;status=2&amp;userid=99BB96FA148B8FAB&amp;time=1535098038&amp;hash=5C39BA7B8F5BAC0AB4EDFDDF4D2D9D55 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4BEC88&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_e_SetSingle_test.py", line 28, in test_a_setSingle
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_f_List_test.LiveClassAPIListTest: 获取直播间列表接口测试</td>
+    <td class="text-center">3</td>
+    <td class="text-center">0</td>
+    <td class="text-center">3</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c6',3)" class="detail" id='c6'>详细</a></td>
+</tr>
+
+<tr id='ft6_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_list: 获取直播间列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_1'>失败</button>
+    <div id='div_ft6_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_1'>失败</button>
+    <div id='div_ft6_1' class="collapse in">
+    <pre>
+    
+ft6_1: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/list?userid=99BB96FA148B8FAB&amp;time=1535098038&amp;hash=41B038BDE241C15131B1C3D38CDE4474 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4BEA90&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_f_List_test.py", line 33, in test_a_list
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_2' class='none'>
+    <td class='failCase'><div class='testcase'>test_b_list: 获取直播间列表成功：全传</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_2'>失败</button>
+    <div id='div_ft6_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_2'>失败</button>
+    <div id='div_ft6_2' class="collapse in">
+    <pre>
+    
+ft6_2: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/list?lines=100&amp;name=autoTestCreate2018-08-24+16_07_08&amp;page=1&amp;roomid=AA86A607E163A5A49C33DC5901307461&amp;status=10&amp;userid=99BB96FA148B8FAB&amp;time=1535098038&amp;hash=80E147B3DC0808EDC33924804AF3B656 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4BECC0&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_f_List_test.py", line 45, in test_b_list
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_3' class='none'>
+    <td class='failCase'><div class='testcase'>test_c_list: 获取直播间列表失败：超范围</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_3'>失败</button>
+    <div id='div_ft6_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_3'>失败</button>
+    <div id='div_ft6_3' class="collapse in">
+    <pre>
+    
+ft6_3: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/list?name=autoTestCreate2018-08-24+16_07_08&amp;status=30&amp;userid=99BB96FA148B8FAB&amp;time=1535098038&amp;hash=00CD6C3335F9878B39C913AE4A74B8F0 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4D6390&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_f_List_test.py", line 57, in test_c_list
+    self.assertEqual(None,'OK')
+AssertionError: None != 'OK'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_g_Detail_test.LiveClassAPIDetailTest: 获取房间信息接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c7',1)" class="detail" id='c7'>详细</a></td>
+</tr>
+
+<tr id='ft7_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_detail: 获取房间信息成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft7_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft7_1'>失败</button>
+    <div id='div_ft7_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft7_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft7_1'>失败</button>
+    <div id='div_ft7_1' class="collapse in">
+    <pre>
+    
+ft7_1: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/room_detail?roomid=AA86A607E163A5A49C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098038&amp;hash=C2A6E544771B4510835F7541843D10FC (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4BE438&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_g_Detail_test.py", line 28, in test_a_detail
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_h_Link_test.LiveClassAPILinkTest: 获取房间登陆连接接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c8',1)" class="detail" id='c8'>详细</a></td>
+</tr>
+
+<tr id='ft8_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_link: 获取房间登陆连接成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft8_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft8_1'>失败</button>
+    <div id='div_ft8_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft8_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft8_1'>失败</button>
+    <div id='div_ft8_1' class="collapse in">
+    <pre>
+    
+ft8_1: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/link?roomid=AA86A607E163A5A49C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098038&amp;hash=C2A6E544771B4510835F7541843D10FC (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4BE4E0&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_h_Link_test.py", line 28, in test_a_link
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_i_SessionId_test.LiveClassAPICloseTest: 获取sessionid接口测试</td>
+    <td class="text-center">5</td>
+    <td class="text-center">0</td>
+    <td class="text-center">5</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c9',5)" class="detail" id='c9'>详细</a></td>
+</tr>
+
+<tr id='ft9_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_role0: 获取sessionid成功：老师带密码</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft9_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft9_1'>失败</button>
+    <div id='div_ft9_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft9_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft9_1'>失败</button>
+    <div id='div_ft9_1' class="collapse in">
+    <pre>
+    
+ft9_1: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/create/sessionid?client=0&amp;name=testauto&amp;password=123&amp;role=0&amp;roomid=AA86A607E163A5A49C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098038&amp;hash=EB47D2E1CA8AD7D3F0E8AA3D6A0F2AC0 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4BE400&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_i_SessionId_test.py", line 38, in test_a_role0
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft9_2' class='none'>
+    <td class='failCase'><div class='testcase'>test_b_role1: 获取sessionid成功：互动</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft9_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft9_2'>失败</button>
+    <div id='div_ft9_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft9_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft9_2'>失败</button>
+    <div id='div_ft9_2' class="collapse in">
+    <pre>
+    
+ft9_2: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/create/sessionid?client=0&amp;name=testauto&amp;role=1&amp;roomid=AA86A607E163A5A49C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098038&amp;hash=9F72B5AC972B909295A553AFF66ABF94 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4BE4E0&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_i_SessionId_test.py", line 50, in test_b_role1
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft9_3' class='none'>
+    <td class='failCase'><div class='testcase'>test_c_role2: 获取sessionid成功：旁听</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft9_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft9_3'>失败</button>
+    <div id='div_ft9_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft9_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft9_3'>失败</button>
+    <div id='div_ft9_3' class="collapse in">
+    <pre>
+    
+ft9_3: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/create/sessionid?client=0&amp;name=testauto&amp;role=2&amp;roomid=AA86A607E163A5A49C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098038&amp;hash=1F56C47E7E7521A880B4646DA3D02527 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4BE0B8&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_i_SessionId_test.py", line 62, in test_c_role2
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft9_4' class='none'>
+    <td class='failCase'><div class='testcase'>test_d_client1: 获取sessionid成功：移动端</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft9_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft9_4'>失败</button>
+    <div id='div_ft9_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft9_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft9_4'>失败</button>
+    <div id='div_ft9_4' class="collapse in">
+    <pre>
+    
+ft9_4: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/create/sessionid?client=1&amp;name=testauto&amp;role=1&amp;roomid=AA86A607E163A5A49C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098038&amp;hash=62EAB460CC81B4ADA2615AA727AEC672 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4BE128&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_i_SessionId_test.py", line 74, in test_d_client1
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft9_5' class='none'>
+    <td class='failCase'><div class='testcase'>test_e_client1: 获取sessionid失败：超范围</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft9_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft9_5'>失败</button>
+    <div id='div_ft9_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft9_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft9_5'>失败</button>
+    <div id='div_ft9_5' class="collapse in">
+    <pre>
+    
+ft9_5: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/create/sessionid?client=1&amp;name=testauto&amp;role=4&amp;roomid=AA86A607E163A5A49C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098038&amp;hash=11780FDC40A696E7C66A2A66F72CA793 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4BE550&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_i_SessionId_test.py", line 86, in test_e_client1
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_j_Chatmsg_test.LiveClassAPIChatmsgTest: 获取聊天信息接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c10',1)" class="detail" id='c10'>详细</a></td>
+</tr>
+
+<tr id='ft10_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_chatmsg: 获取聊天信息成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft10_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft10_1'>失败</button>
+    <div id='div_ft10_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft10_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft10_1'>失败</button>
+    <div id='div_ft10_1' class="collapse in">
+    <pre>
+    
+ft10_1: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/live/chatmsg?liveid=3DC85D781667C629&amp;roomid=42A8012C26122E399C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098038&amp;hash=048D1C37713F00BE10D5CB4BA9CEE66E (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4BE128&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_j_Chatmsg_test.py", line 28, in test_a_chatmsg
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_k_Record_test.LiveClassAPIRecordTest: 查询回放列表接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c11',1)" class="detail" id='c11'>详细</a></td>
+</tr>
+
+<tr id='ft11_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_record: 查询回访列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft11_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft11_1'>失败</button>
+    <div id='div_ft11_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft11_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft11_1'>失败</button>
+    <div id='div_ft11_1' class="collapse in">
+    <pre>
+    
+ft11_1: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/v2/record/info?roomid=42A8012C26122E399C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098038&amp;hash=0B7B600AD811B42E2F8F3EE93F3A1025 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4BE630&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_k_Record_test.py", line 28, in test_a_record
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_l_Rearch_test.LiveClassAPISearchTest: 查询回放信息接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c12',1)" class="detail" id='c12'>详细</a></td>
+</tr>
+
+<tr id='ft12_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_search: 查询回放信息成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft12_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft12_1'>失败</button>
+    <div id='div_ft12_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft12_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft12_1'>失败</button>
+    <div id='div_ft12_1' class="collapse in">
+    <pre>
+    
+ft12_1: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/v2/record/search?recordid=BD6689A20F863100&amp;userid=99BB96FA148B8FAB&amp;time=1535098038&amp;hash=CF6F55834549AC971A3BD520FF7985DD (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4BE470&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_l_Rearch_test.py", line 28, in test_a_search
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_m_Add_test.LiveClassAPIAddTest: 上传文档接口测试</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c13',2)" class="detail" id='c13'>详细</a></td>
+</tr>
+
+<tr id='ft13_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_add: 获取文档上传信息表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft13_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft13_1'>失败</button>
+    <div id='div_ft13_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft13_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft13_1'>失败</button>
+    <div id='div_ft13_1' class="collapse in">
+    <pre>
+    
+ft13_1: 'userid'
+HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/v1/doc/add?account_id=99BB96FA148B8FAB&amp;doc_name=test&amp;doc_size=11588&amp;time=1535098038&amp;hash=89B31F596789F847A87962068B5D8357 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4BE550&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_m_Add_test.py", line 33, in test_a_add
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft13_2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_b_add: 文档上传成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft13_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft13_2'>错误</button>
+    <div id='div_ft13_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft13_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft13_2'>错误</button>
+    <div id='div_ft13_2' class="collapse in">
+    <pre>
+    
+ft13_2: 'userid'
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_m_Add_test.py", line 45, in test_b_add
+    response = requests.request("POST",ADDURL,files=files)
+  File "F:\LiveClassAPIAutoTest\venv\lib\site-packages\pip-9.0.1-py3.7.egg\pip\_vendor\requests\api.py", line 56, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "F:\LiveClassAPIAutoTest\venv\lib\site-packages\pip-9.0.1-py3.7.egg\pip\_vendor\requests\sessions.py", line 461, in request
+    prep = self.prepare_request(req)
+  File "F:\LiveClassAPIAutoTest\venv\lib\site-packages\pip-9.0.1-py3.7.egg\pip\_vendor\requests\sessions.py", line 394, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "F:\LiveClassAPIAutoTest\venv\lib\site-packages\pip-9.0.1-py3.7.egg\pip\_vendor\requests\models.py", line 294, in prepare
+    self.prepare_url(url, params)
+  File "F:\LiveClassAPIAutoTest\venv\lib\site-packages\pip-9.0.1-py3.7.egg\pip\_vendor\requests\models.py", line 354, in prepare_url
+    raise MissingSchema(error)
+pip._vendor.requests.exceptions.MissingSchema: Invalid URL '': No schema supplied. Perhaps you meant http://?
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_n_Delete_test.LiveClassAPIDeleteTest: 删除文档接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c14',1)" class="detail" id='c14'>详细</a></td>
+</tr>
+
+<tr id='ft14_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_list: 获取直播间列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft14_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft14_1'>失败</button>
+    <div id='div_ft14_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft14_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft14_1'>失败</button>
+    <div id='div_ft14_1' class="collapse in">
+    <pre>
+    
+ft14_1: 'userid'
+HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/v1/doc/delete?account_id=99BB96FA148B8FAB&amp;doc_id=173BD0FEA9DBDC44&amp;time=1535098038&amp;hash=7630ADE39FCDEAE8EC815778893C92AF (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4BE390&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_n_Delete_test.py", line 28, in test_a_list
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_o_DocList_test.LiveClassAPIDocListTest: 查询文档接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c15',1)" class="detail" id='c15'>详细</a></td>
+</tr>
+
+<tr id='ft15_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_list: 获取共享文档列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft15_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft15_1'>失败</button>
+    <div id='div_ft15_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft15_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft15_1'>失败</button>
+    <div id='div_ft15_1' class="collapse in">
+    <pre>
+    
+ft15_1: 'userid'
+HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/v1/doc/list?account_id=99BB96FA148B8FAB&amp;time=1535098038&amp;hash=CD252E157BE6DD2A64EA9764F9A1312F (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4BE390&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_o_DocList_test.py", line 29, in test_a_list
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_p_Auth_test.LiveClassAPIAuthTest: 获取房间文档列表接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c16',1)" class="detail" id='c16'>详细</a></td>
+</tr>
+
+<tr id='ft16_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_list: 获取房间文档列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft16_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft16_1'>失败</button>
+    <div id='div_ft16_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft16_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft16_1'>失败</button>
+    <div id='div_ft16_1' class="collapse in">
+    <pre>
+    
+ft16_1: 'userid'
+HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/v1/doc/auth/list?account_id=99BB96FA148B8FAB&amp;room_id=42A8012C26122E399C33DC5901307461&amp;time=1535098038&amp;hash=3765767CD15CB6B0FA90F80F599E9280 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4BE5C0&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_p_Auth_test.py", line 28, in test_a_list
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_q_Relate_test.LiveClassAPIRelateTest: 文档关联接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c17',1)" class="detail" id='c17'>详细</a></td>
+</tr>
+
+<tr id='ft17_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_list: 文档关联成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft17_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft17_1'>失败</button>
+    <div id='div_ft17_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft17_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft17_1'>失败</button>
+    <div id='div_ft17_1' class="collapse in">
+    <pre>
+    
+ft17_1: 'userid'
+HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/v1/doc/relate?account_id=99BB96FA148B8FAB&amp;doc_id=173BD0FEA9DBDC44&amp;room_id=AA86A607E163A5A49C33DC5901307461&amp;time=1535098038&amp;hash=E70FA0AD7E5EC7952816F7885584F5F4 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC442C88&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_q_Relate_test.py", line 28, in test_a_list
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_r_Unrelate_test.LiveClassAPIUnrelateTest: 取消文档关联接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c18',1)" class="detail" id='c18'>详细</a></td>
+</tr>
+
+<tr id='ft18_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_list: 取消文档关联成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft18_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft18_1'>失败</button>
+    <div id='div_ft18_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft18_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft18_1'>失败</button>
+    <div id='div_ft18_1' class="collapse in">
+    <pre>
+    
+ft18_1: 'userid'
+HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/v1/doc/unrelate?account_id=99BB96FA148B8FAB&amp;doc_id=173BD0FEA9DBDC44&amp;room_id=AA86A607E163A5A49C33DC5901307461&amp;time=1535098038&amp;hash=E70FA0AD7E5EC7952816F7885584F5F4 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4B4CF8&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_r_Unrelate_test.py", line 28, in test_a_list
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_s_Video_test.LiveClassAPIVideoTest: 上传视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c19',1)" class="detail" id='c19'>详细</a></td>
+</tr>
+
+<tr id='ft19_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_list: 生成上传接口成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft19_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft19_1'>失败</button>
+    <div id='div_ft19_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft19_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft19_1'>失败</button>
+    <div id='div_ft19_1' class="collapse in">
+    <pre>
+    
+ft19_1: 'userid'
+HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/v1/video/createuploadinfo?account_id=99BB96FA148B8FAB&amp;filename=autotest001&amp;title=autotest001&amp;time=1535098038&amp;hash=E35381D2CEC9509E36E9427E6EE24C76 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4B4240&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_s_Video_test.py", line 28, in test_a_list
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_t_Video_test.LiveClassAPIVideoTest: 关联视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c20',1)" class="detail" id='c20'>详细</a></td>
+</tr>
+
+<tr id='ft20_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_list: 生成上传接口成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft20_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft20_1'>失败</button>
+    <div id='div_ft20_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft20_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft20_1'>失败</button>
+    <div id='div_ft20_1' class="collapse in">
+    <pre>
+    
+ft20_1: 'userid'
+HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/v1/video/relate?account_id=99BB96FA148B8FAB&amp;room_id=42A8012C26122E399C33DC5901307461&amp;video_id=806FA30B438D98A6FC9558351D509E7C&amp;time=1535098038&amp;hash=C440AFC2E1EACB94BDACAE395C1F27E6 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4B4588&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_t_Video_test.py", line 28, in test_a_list
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_u_Video_test.LiveClassAPIVideoTest: 查询房间已关联的媒体接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c21',1)" class="detail" id='c21'>详细</a></td>
+</tr>
+
+<tr id='ft21_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_list: 查询房间已关联的媒体成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft21_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft21_1'>失败</button>
+    <div id='div_ft21_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft21_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft21_1'>失败</button>
+    <div id='div_ft21_1' class="collapse in">
+    <pre>
+    
+ft21_1: 'userid'
+HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/v1/video/onrelated?account_id=99BB96FA148B8FAB&amp;room_id=42A8012C26122E399C33DC5901307461&amp;time=1535098038&amp;hash=3765767CD15CB6B0FA90F80F599E9280 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4B4AC8&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_u_Video_test.py", line 28, in test_a_list
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_v_Video_test.LiveClassAPIVideoTest: 设为暖场视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c22',1)" class="detail" id='c22'>详细</a></td>
+</tr>
+
+<tr id='ft22_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_list: 设为暖场视频成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft22_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft22_1'>失败</button>
+    <div id='div_ft22_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft22_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft22_1'>失败</button>
+    <div id='div_ft22_1' class="collapse in">
+    <pre>
+    
+ft22_1: 'userid'
+HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/v1/video/warm/set?account_id=99BB96FA148B8FAB&amp;room_id=42A8012C26122E399C33DC5901307461&amp;video_id=806FA30B438D98A6FC9558351D509E7C&amp;time=1535098038&amp;hash=C440AFC2E1EACB94BDACAE395C1F27E6 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4B4AC8&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_v_Video_test.py", line 28, in test_a_list
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_w_Video_test.LiveClassAPIVideoTest: 取消暖场视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c23',1)" class="detail" id='c23'>详细</a></td>
+</tr>
+
+<tr id='ft23_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_list: 取消暖场视频成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft23_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft23_1'>失败</button>
+    <div id='div_ft23_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft23_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft23_1'>失败</button>
+    <div id='div_ft23_1' class="collapse in">
+    <pre>
+    
+ft23_1: 'userid'
+HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/v1/video/warm/unset?account_id=99BB96FA148B8FAB&amp;room_id=42A8012C26122E399C33DC5901307461&amp;video_id=806FA30B438D98A6FC9558351D509E7C&amp;time=1535098038&amp;hash=C440AFC2E1EACB94BDACAE395C1F27E6 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4B46A0&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_w_Video_test.py", line 28, in test_a_list
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_x_Video_test.LiveClassAPIVideoTest: 取消关联视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c24',1)" class="detail" id='c24'>详细</a></td>
+</tr>
+
+<tr id='ft24_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_list: 取消关联视频成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft24_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft24_1'>失败</button>
+    <div id='div_ft24_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft24_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft24_1'>失败</button>
+    <div id='div_ft24_1' class="collapse in">
+    <pre>
+    
+ft24_1: 'userid'
+HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/v1/video/unrelate?account_id=99BB96FA148B8FAB&amp;room_id=42A8012C26122E399C33DC5901307461&amp;video_id=806FA30B438D98A6FC9558351D509E7C&amp;time=1535098038&amp;hash=C440AFC2E1EACB94BDACAE395C1F27E6 (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4B6710&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_x_Video_test.py", line 28, in test_a_list
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_z_Close_test.LiveClassAPICloseTest: 关闭直播间接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c25',1)" class="detail" id='c25'>详细</a></td>
+</tr>
+
+<tr id='ft25_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_update: 关闭直播间成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft25_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft25_1'>失败</button>
+    <div id='div_ft25_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft25_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft25_1'>失败</button>
+    <div id='div_ft25_1' class="collapse in">
+    <pre>
+    
+ft25_1: HTTPSConnectionPool(host='ccapi-1.csslcloud.net', port=443): Max retries exceeded with url: /api/room/close?roomid=AA86A607E163A5A49C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098038&amp;hash=C2A6E544771B4510835F7541843D10FC (Caused by NewConnectionError('&lt;pip._vendor.requests.packages.urllib3.connection.VerifiedHTTPSConnection object at 0x000001A7AC4B65C0&gt;: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_z_Close_test.py", line 28, in test_a_update
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='total_row' class="text-center active">
+    <td>总计</td>
+    <td>38</td>
+    <td>0</td>
+    <td>35</td>
+    <td>3</td>
+    <td>通过率：0.00%</td>
+</tr>
+</table>
+
+<div id='ending'>&nbsp;</div>
+    <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+    <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+    </span></a></div>
+    
+</body>
+</html>

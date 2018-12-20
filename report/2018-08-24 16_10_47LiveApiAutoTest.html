@@ -1,0 +1,1224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>LiveClassAPI接口测试</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2.2"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+<style type="text/css" media="screen">
+body        { font-family: Microsoft YaHei,Tahoma,arial,helvetica,sans-serif;padding: 20px; font-size: 80%; }
+table       { font-size: 100%; }
+/* -- heading ---------------------------------------------------------------------- */
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+/* -- report ------------------------------------------------------------------------ */
+#total_row  { font-weight: bold; }
+.passCase   { color: #5cb85c; }
+.failCase   { color: #d9534f; font-weight: bold; }
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+</style>
+
+</head>
+<body >
+<script language="javascript" type="text/javascript">
+output_list = Array();
+/*level 调整增加只显示通过用例的分类 --Findyou
+0:Summary //all hiddenRow
+1:Failed  //pt hiddenRow, ft none
+2:Pass    //pt none, ft hiddenRow
+3:All     //pt none, ft none
+*/
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level == 2 || level == 0 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level < 2) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+    }
+    //加入【详细】切换文字变化 --Findyou
+    detail_class=document.getElementsByClassName('detail');
+	//console.log(detail_class.length)
+	if (level == 3) {
+		for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="收起"
+		}
+	}
+	else{
+			for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="详细"
+		}
+	}
+}
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        //ID修改 点 为 下划线 -Findyou
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+        if (toHide) {
+            document.getElementById(tid).className = 'hiddenRow';
+            document.getElementById(cid).innerText = "详细"
+        }
+        else {
+            document.getElementById(tid).className = '';
+            document.getElementById(cid).innerText = "收起"
+        }
+    }
+}
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+</script>
+<div class='heading'>
+<h1 style="font-family: Microsoft YaHei">LiveClassAPI接口测试</h1>
+<p class='attribute'><strong>开始时间 : </strong> 2018-08-24 16:10:47</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:15.526108</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 38，通过 33，失败 5，通过率= 86.84%</p>
+
+<p class='description'>详情请下载附件查看：</p>
+</div>
+
+
+<p id='show_detail_line'>
+<a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 86.84% }</a>
+<a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 5 }</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过{ 33 }</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 38 }</a>
+</p>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 14px;">
+    <td>报告列表</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>失败</td>
+    <td>错误</td>
+    <td>详细</td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_a_Create_test.LiveClassAPICreateTest: 创建直播间接口测试</td>
+    <td class="text-center">4</td>
+    <td class="text-center">4</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',4)" class="detail" id='c1'>详细</a></td>
+</tr>
+
+<tr id='pt1_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_create: 创建直播间成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse in">
+    <pre>
+    
+pt1_1: 请求url:https://ccapi-1.csslcloud.net/api/room/create?audience_authtype=2&amp;desc=autoTestCreateRoom&amp;name=autoTestCreate2018-08-24+16_10_47&amp;publisherpass=123&amp;room_type=2&amp;talker_authtype=2&amp;userid=99BB96FA148B8FAB&amp;time=1535098247&amp;hash=4D20E96F46860564FCCF385CF428115B
+输入参数：{'userid': '99BB96FA148B8FAB', 'name': 'autoTestCreate2018-08-24 16_10_47', 'room_type': 2, 'publisherpass': '123', 'audience_authtype': 2, 'talker_authtype': 2, 'desc': 'autoTestCreateRoom'}
+返回数据: {'data': {'roomid': 'D709EE33E86FCC449C33DC5901307461'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_b_create: 创建直播间：全填</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+    <div id='div_pt1_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+    <div id='div_pt1_2' class="collapse in">
+    <pre>
+    
+pt1_2: 请求url:https://ccapi-1.csslcloud.net/api/room/create?audience_authtype=2&amp;audience_pass=321&amp;classtype=2&amp;desc=autoTestCreateRoom&amp;desktop_audio=1&amp;inspector_authtype=2&amp;inspector_pass=123&amp;light_mark=1&amp;manual_record=1&amp;max_streams=1&amp;max_users=15&amp;mergetype=1&amp;name=autoTestCreate2018-08-24+16_10_48&amp;ppt_support=True&amp;presenter_out=True&amp;publisher_bitrate=500&amp;publisherpass=123&amp;record_bitrate=0&amp;room_type=2&amp;screen_lock=1&amp;show_exit=0&amp;talker_authtype=2&amp;talker_bitrate=500&amp;talker_pass=123&amp;templatetype=1&amp;userid=99BB96FA148B8FAB&amp;video_mode=2&amp;warm_open=1&amp;time=1535098248&amp;hash=4B5DD517FDEB837F2BA1C9ACE6AED402
+输入参数：{'userid': '99BB96FA148B8FAB', 'name': 'autoTestCreate2018-08-24 16_10_48', 'room_type': 2, 'publisherpass': '123', 'audience_authtype': 2, 'audience_pass': '321', 'talker_pass': '123', 'inspector_authtype': '2', 'talker_authtype': 2, 'inspector_pass': '123', 'templatetype': '1', 'mergetype': '1', 'max_users': '15', 'max_streams': '1', 'desc': 'autoTestCreateRoom', 'video_mode': '2', 'talker_bitrate': '500', 'publisher_bitrate': '500', 'classtype': '2', 'presenter_out': True, 'light_mark': '1', 'show_exit': '0', 'ppt_support': True, 'screen_lock': '1', 'desktop_audio': '1', 'manual_record': '1', 'record_bitrate': '0', 'warm_open': '1'}
+返回数据: {'data': {'roomid': '6EC1DC8190D7F4839C33DC5901307461'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_c_create: 创建直播间：白名单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse in">
+    <pre>
+    
+pt1_3: 请求url:https://ccapi-1.csslcloud.net/api/room/create?name=autoTestCreate2018-08-24+16_10_48&amp;publisherpass=123&amp;room_type=2&amp;talker_authtype=3&amp;userid=99BB96FA148B8FAB&amp;white_list=%7B%27user%27%3A%27123%27%7D&amp;time=1535098248&amp;hash=267DBB223DAE3F6002D340D6B0E16991
+输入参数：{'userid': '99BB96FA148B8FAB', 'name': 'autoTestCreate2018-08-24 16_10_48', 'room_type': 2, 'publisherpass': '123', 'talker_authtype': 3, 'white_list': "{'user':'123'}"}
+返回数据: {'data': {'roomid': '65ABFD344BB9546E9C33DC5901307461'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_d_create: 创建直播间：超范围参数</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_4'>通过</button>
+    <div id='div_pt1_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_4'>通过</button>
+    <div id='div_pt1_4' class="collapse in">
+    <pre>
+    
+pt1_4: 输入参数：https://ccapi-1.csslcloud.net/api/room/create?name=autoTestCreate2018-08-24+16_10_49&amp;publisherpass=123&amp;room_type=5&amp;talker_authtype=2&amp;userid=99BB96FA148B8FAB&amp;time=1535098249&amp;hash=E8544A16BB8BEEB60C65C4415E177418
+输入参数：{'userid': '99BB96FA148B8FAB', 'name': 'autoTestCreate2018-08-24 16_10_49', 'room_type': 5, 'publisherpass': '123', 'talker_authtype': 2}
+返回数据: {'error': {'code': -1, 'message': '系统错误', 'type': 'TypeError'}, 'errorMsg': '系统错误', 'result': 'FAIL'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_b_Start_test.LiveClassAPIStartTest: 开始直播接口测试</td>
+    <td class="text-center">2</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c2',2)" class="detail" id='c2'>详细</a></td>
+</tr>
+
+<tr id='pt2_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_start: 开始直播成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse in">
+    <pre>
+    
+pt2_1: 'userid'
+请求url:https://ccapi-1.csslcloud.net/api/room/live/start?roomid=42A8012C26122E399C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098249&amp;hash=2CC3A6464F28051D68C4E4ABE1B0B8FF
+请求数据: {'userid': '99BB96FA148B8FAB', 'roomid': '42A8012C26122E399C33DC5901307461'}
+返回数据：{'liveId': 'DE5D24D5B6CB0534', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_b_start: 开始直播成功：不传userid</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_2'>通过</button>
+    <div id='div_pt2_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_2'>通过</button>
+    <div id='div_pt2_2' class="collapse in">
+    <pre>
+    
+pt2_2: 'userid'
+请求url:https://ccapi-1.csslcloud.net/api/room/live/start?roomid=D709EE33E86FCC449C33DC5901307461&amp;time=1535098249&amp;hash=F35407A3196F395599EE70DA93207E22
+请求数据: {'roomid': 'D709EE33E86FCC449C33DC5901307461'}
+返回数据：{'liveId': '22325FBB44DF1D68', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_c_Stop_test.LiveClassAPIStopTest: 停止直播接口测试</td>
+    <td class="text-center">2</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c3',2)" class="detail" id='c3'>详细</a></td>
+</tr>
+
+<tr id='pt3_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_stop: 停止直播成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+    <div id='div_pt3_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+    <div id='div_pt3_1' class="collapse in">
+    <pre>
+    
+pt3_1: 'userid'
+请求url:https://ccapi-1.csslcloud.net/api/room/live/stop?roomid=42A8012C26122E399C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098249&amp;hash=2CC3A6464F28051D68C4E4ABE1B0B8FF
+输入参数：{'userid': '99BB96FA148B8FAB', 'roomid': '42A8012C26122E399C33DC5901307461'}
+返回数据: {'data': {'end_time': '2018-08-24 16:10:52', 'start_time': '2018-08-24 16:10:47'}, 'liveId': 'DE5D24D5B6CB0534', 'liveStopTime': '2018-08-24 16:10:52', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_b_stop: 停止直播成功:不传userid</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_2'>通过</button>
+    <div id='div_pt3_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_2'>通过</button>
+    <div id='div_pt3_2' class="collapse in">
+    <pre>
+    
+pt3_2: 'userid'
+请求url:https://ccapi-1.csslcloud.net/api/room/live/stop?roomid=D709EE33E86FCC449C33DC5901307461&amp;time=1535098254&amp;hash=CCD68CA230B631EE950BB3EAC646DC24
+输入参数：{'roomid': 'D709EE33E86FCC449C33DC5901307461'}
+返回数据: {'data': {'end_time': '2018-08-24 16:10:58', 'start_time': '2018-08-24 16:10:47'}, 'liveId': '22325FBB44DF1D68', 'liveStopTime': '2018-08-24 16:10:58', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_d_Update_test.LiveClassAPIUpdateTest: 编辑直播间接口测试</td>
+    <td class="text-center">2</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c4',2)" class="detail" id='c4'>详细</a></td>
+</tr>
+
+<tr id='pt4_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_update: 更新直播间:成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_1'>通过</button>
+    <div id='div_pt4_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_1'>通过</button>
+    <div id='div_pt4_1' class="collapse in">
+    <pre>
+    
+pt4_1: 请求url:b https://ccapi-1.csslcloud.net/api/room/update?allow_audio=True&amp;allow_chat=True&amp;allow_speak=True&amp;audience_authtype=2&amp;desc=autoTestUpdateRoom&amp;live_roomid=D709EE33E86FCC449C33DC5901307461&amp;name=autoTestUpdate2018-08-24+16_10_59&amp;publisherpass=123&amp;room_type=2&amp;talker_authtype=2&amp;userid=99BB96FA148B8FAB&amp;time=1535098259&amp;hash=FD7C9625C585F085CCB69589D60DC282
+请求数据: {'userid': '99BB96FA148B8FAB', 'live_roomid': 'D709EE33E86FCC449C33DC5901307461', 'name': 'autoTestUpdate2018-08-24 16_10_59', 'room_type': 2, 'publisherpass': '123', 'audience_authtype': 2, 'talker_authtype': 2, 'desc': 'autoTestUpdateRoom', 'allow_chat': True, 'allow_audio': True, 'allow_speak': True}
+返回数据：{'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft4_2' class='none'>
+    <td class='failCase'><div class='testcase'>test_b_update: 更新直播间:超范围</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft4_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_2'>失败</button>
+    <div id='div_ft4_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft4_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_2'>失败</button>
+    <div id='div_ft4_2' class="collapse in">
+    <pre>
+    
+ft4_2: 请求url:  https://ccapi-1.csslcloud.net/api/room/update?allow_audio=True&amp;allow_chat=True&amp;allow_speak=True&amp;audience_authtype=5&amp;desc=autoTestUpdateRoom&amp;live_roomid=D709EE33E86FCC449C33DC5901307461&amp;name=autoTestUpdate2018-08-24+16_11_00&amp;publisherpass=123&amp;room_type=2&amp;talker_authtype=5&amp;userid=99BB96FA148B8FAB&amp;time=1535098260&amp;hash=27CBE3C5392935BBDB59A7227D60D027
+请求数据: {'userid': '99BB96FA148B8FAB', 'live_roomid': 'D709EE33E86FCC449C33DC5901307461', 'name': 'autoTestUpdate2018-08-24 16_11_00', 'room_type': 2, 'publisherpass': '123', 'audience_authtype': 5, 'talker_authtype': 5, 'desc': 'autoTestUpdateRoom', 'allow_chat': True, 'allow_audio': True, 'allow_speak': True}
+返回数据：{'error': {'code': -1, 'message': '系统错误', 'type': 'TypeError'}, 'errorMsg': '系统错误', 'result': 'FAIL'}
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_d_Update_test.py", line 48, in test_b_update
+    self.assertEqual(r['result'],'OK')
+AssertionError: 'FAIL' != 'OK'
+- FAIL
++ OK
+
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_e_SetSingle_test.LiveClassAPISetTest: 切换合流布局模式接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c5',1)" class="detail" id='c5'>详细</a></td>
+</tr>
+
+<tr id='pt5_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_setSingle: 切换合流布局模式成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_1'>通过</button>
+    <div id='div_pt5_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_1'>通过</button>
+    <div id='div_pt5_1' class="collapse in">
+    <pre>
+    
+pt5_1: 请求url:https://ccapi-1.csslcloud.net/api/room/set_single?roomid=D709EE33E86FCC449C33DC5901307461&amp;status=2&amp;userid=99BB96FA148B8FAB&amp;time=1535098260&amp;hash=500995F18FFF26BDB32DE9C878DACBBA
+请求数据: {'userid': '99BB96FA148B8FAB', 'roomid': 'D709EE33E86FCC449C33DC5901307461', 'status': 2}
+返回数据：{'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_f_List_test.LiveClassAPIListTest: 获取直播间列表接口测试</td>
+    <td class="text-center">3</td>
+    <td class="text-center">3</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c6',3)" class="detail" id='c6'>详细</a></td>
+</tr>
+
+<tr id='pt6_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 获取直播间列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_1'>通过</button>
+    <div id='div_pt6_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_1'>通过</button>
+    <div id='div_pt6_1' class="collapse in">
+    <pre>
+    
+pt6_1: 请求url:https://ccapi-1.csslcloud.net/api/room/list?userid=99BB96FA148B8FAB&amp;time=1535098260&amp;hash=E8135CACF2C92B77CCCE363E33E9BA43
+请求数据: {'userid': '99BB96FA148B8FAB'}
+返回数据：{'current': 1, 'result': 'OK', 'rooms': [{'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7fbd8766ddb2344a307f97', 'audience_authtype': 2, 'audience_pass': '321', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=6EC1DC8190D7F4839C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': 'autoTestCreateRoom', 'desktop_audio': 1, 'helper_switch': 0, 'id': 368, 'inspector_authtype': 2, 'inspector_pass': '123', 'is_follow': '', 'light_mark': 1, 'live_roomid': '6EC1DC8190D7F4839C33DC5901307461', 'manual_record': 1, 'max_streams': 1, 'max_users': 15, 'mergetype': 1, 'name': 'autoTestCreate2018-08-24 16_10_48', 'platform': 1, 'ppt_support': True, 'presenter_out': True, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=6EC1DC8190D7F4839C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 500, 'publisherpass': '123', 'record_bitrate': 0, 'recordstudent': 1, 'room_type': 2, 'roomid': '6EC1DC8190D7F4839C33DC5901307461', 'screen_lock': 1, 'show_exit': 0, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 500, 'talker_pass': '123', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=6EC1DC8190D7F4839C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 2, 'video_zoom': '', 'warm_open': '1', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7fbd8791223e343e697b45', 'audience_authtype': 1, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=65ABFD344BB9546E9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': '实时课堂直播间', 'desktop_audio': 0, 'helper_switch': 0, 'id': 369, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '65ABFD344BB9546E9C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-24 16_10_48', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=65ABFD344BB9546E9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '65ABFD344BB9546E9C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 3, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=65ABFD344BB9546E9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': "{'user':'123'}"}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7fbd872be73c3431a481a6', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=D709EE33E86FCC449C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 367, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': 'D709EE33E86FCC449C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-24 16_10_59', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=D709EE33E86FCC449C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': 'D709EE33E86FCC449C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=D709EE33E86FCC449C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7fbcdb91223e343e697b43', 'audience_authtype': 1, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=D5AEF92FB51970AF9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': '实时课堂直播间', 'desktop_audio': 0, 'helper_switch': 0, 'id': 366, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': 'D5AEF92FB51970AF9C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-24 16_07_56', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=D5AEF92FB51970AF9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': 'D5AEF92FB51970AF9C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 3, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=D5AEF92FB51970AF9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': "{'user':'123'}"}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7fbcda2be73c3431a481a4', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=26E03B53C363E8C59C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': 'autoTestCreateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 364, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '26E03B53C363E8C59C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-24 16_07_55', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=26E03B53C363E8C59C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '26E03B53C363E8C59C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 20, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=26E03B53C363E8C59C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7fbcdb66ddb2344a307f95', 'audience_authtype': 2, 'audience_pass': '321', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=9B70DACF2A2EDD449C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': 'autoTestCreateRoom', 'desktop_audio': 1, 'helper_switch': 0, 'id': 365, 'inspector_authtype': 2, 'inspector_pass': '123', 'is_follow': '', 'light_mark': 1, 'live_roomid': '9B70DACF2A2EDD449C33DC5901307461', 'manual_record': 1, 'max_streams': 1, 'max_users': 15, 'mergetype': 1, 'name': 'autoTestCreate2018-08-24 16_07_56', 'platform': 1, 'ppt_support': True, 'presenter_out': True, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=9B70DACF2A2EDD449C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 500, 'publisherpass': '123', 'record_bitrate': 0, 'recordstudent': 1, 'room_type': 2, 'roomid': '9B70DACF2A2EDD449C33DC5901307461', 'screen_lock': 1, 'show_exit': 0, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 500, 'talker_pass': '123', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=9B70DACF2A2EDD449C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 2, 'video_zoom': '', 'warm_open': '1', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7f64be63d4f53444fe94b5', 'audience_authtype': 2, 'audience_pass': '321', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=C935937964BE090C9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': 'autoTestCreateRoom', 'desktop_audio': 1, 'helper_switch': 0, 'id': 362, 'inspector_authtype': 2, 'inspector_pass': '123', 'is_follow': '', 'light_mark': 1, 'live_roomid': 'C935937964BE090C9C33DC5901307461', 'manual_record': 1, 'max_streams': 1, 'max_users': 15, 'mergetype': 1, 'name': 'autoTestCreate2018-08-24 09_51_59', 'platform': 1, 'ppt_support': True, 'presenter_out': True, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=C935937964BE090C9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 500, 'publisherpass': '123', 'record_bitrate': 0, 'recordstudent': 1, 'room_type': 2, 'roomid': 'C935937964BE090C9C33DC5901307461', 'screen_lock': 1, 'show_exit': 0, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 500, 'talker_pass': '123', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=C935937964BE090C9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 2, 'video_zoom': '', 'warm_open': '1', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7f64beb8ed45345004749b', 'audience_authtype': 1, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=D9D8C326874F9B699C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': '实时课堂直播间', 'desktop_audio': 0, 'helper_switch': 0, 'id': 363, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': 'D9D8C326874F9B699C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-24 09_51_59', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=D9D8C326874F9B699C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': 'D9D8C326874F9B699C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 3, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=D9D8C326874F9B699C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': "{'user':'123'}"}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7f64be91223e343e697b22', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=AA86A607E163A5A49C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 361, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': 'AA86A607E163A5A49C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-24 09_52_10', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=AA86A607E163A5A49C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': 'AA86A607E163A5A49C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 20, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=AA86A607E163A5A49C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7f645f675eb13438da5340', 'audience_authtype': 2, 'audience_pass': '321', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=C9C1AD01F54D51189C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': 'autoTestCreateRoom', 'desktop_audio': 1, 'helper_switch': 0, 'id': 359, 'inspector_authtype': 2, 'inspector_pass': '123', 'is_follow': '', 'light_mark': 1, 'live_roomid': 'C9C1AD01F54D51189C33DC5901307461', 'manual_record': 1, 'max_streams': 1, 'max_users': 15, 'mergetype': 1, 'name': 'autoTestCreate2018-08-24 09_50_24', 'platform': 1, 'ppt_support': True, 'presenter_out': True, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=C9C1AD01F54D51189C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 500, 'publisherpass': '123', 'record_bitrate': 0, 'recordstudent': 1, 'room_type': 2, 'roomid': 'C9C1AD01F54D51189C33DC5901307461', 'screen_lock': 1, 'show_exit': 0, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 500, 'talker_pass': '123', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=C9C1AD01F54D51189C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 2, 'video_zoom': '', 'warm_open': '1', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7f6460fda7b23437456c7f', 'audience_authtype': 1, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=12A4F28867D698909C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': '实时课堂直播间', 'desktop_audio': 0, 'helper_switch': 0, 'id': 360, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '12A4F28867D698909C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-24 09_50_24', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=12A4F28867D698909C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '12A4F28867D698909C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 3, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=12A4F28867D698909C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': "{'user':'123'}"}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7f645f9c799b3456bfae2b', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=0BC7898E0AAFB0CF9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 358, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '0BC7898E0AAFB0CF9C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-24 09_50_24', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=0BC7898E0AAFB0CF9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '0BC7898E0AAFB0CF9C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 20, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=0BC7898E0AAFB0CF9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e776563d4f53444fe94ac', 'audience_authtype': 2, 'audience_pass': '321', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=35E0A62E43BD54AE9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestCreateRoom', 'desktop_audio': 1, 'helper_switch': 0, 'id': 356, 'inspector_authtype': 2, 'inspector_pass': '123', 'is_follow': '', 'light_mark': 1, 'live_roomid': '35E0A62E43BD54AE9C33DC5901307461', 'manual_record': 1, 'max_streams': 1, 'max_users': 15, 'mergetype': 1, 'name': 'autoTestCreate2018-08-23 16_59_17', 'platform': 1, 'ppt_support': True, 'presenter_out': True, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=35E0A62E43BD54AE9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 500, 'publisherpass': '123', 'record_bitrate': 0, 'recordstudent': 1, 'room_type': 2, 'roomid': '35E0A62E43BD54AE9C33DC5901307461', 'screen_lock': 1, 'show_exit': 0, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 500, 'talker_pass': '123', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=35E0A62E43BD54AE9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 2, 'video_zoom': '', 'warm_open': '1', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e7765b8ed453450047491', 'audience_authtype': 1, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=F6242E9F0C6A959D9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': '实时课堂直播间', 'desktop_audio': 0, 'helper_switch': 0, 'id': 357, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': 'F6242E9F0C6A959D9C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-23 16_59_17', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=F6242E9F0C6A959D9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': 'F6242E9F0C6A959D9C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 3, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=F6242E9F0C6A959D9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': "{'user':'123'}"}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e776591223e343e697b18', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=BFFD01C1442891AF9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 355, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': 'BFFD01C1442891AF9C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-23 16_59_29', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=BFFD01C1442891AF9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': 'BFFD01C1442891AF9C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 20, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=BFFD01C1442891AF9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e757cfda7b23437456c76', 'audience_authtype': 2, 'audience_pass': '321', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=A04CD5BB188EE6969C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestCreateRoom', 'desktop_audio': 1, 'helper_switch': 0, 'id': 353, 'inspector_authtype': 2, 'inspector_pass': '123', 'is_follow': '', 'light_mark': 1, 'live_roomid': 'A04CD5BB188EE6969C33DC5901307461', 'manual_record': 1, 'max_streams': 1, 'max_users': 15, 'mergetype': 1, 'name': 'autoTestCreate2018-08-23 16_51_08', 'platform': 1, 'ppt_support': True, 'presenter_out': True, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=A04CD5BB188EE6969C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 500, 'publisherpass': '123', 'record_bitrate': 0, 'recordstudent': 1, 'room_type': 2, 'roomid': 'A04CD5BB188EE6969C33DC5901307461', 'screen_lock': 1, 'show_exit': 0, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 500, 'talker_pass': '123', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=A04CD5BB188EE6969C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 2, 'video_zoom': '', 'warm_open': '1', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e757c2be73c3431a4817a', 'audience_authtype': 1, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=12ECDFB90223F91E9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': '实时课堂直播间', 'desktop_audio': 0, 'helper_switch': 0, 'id': 354, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '12ECDFB90223F91E9C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-23 16_51_08', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=12ECDFB90223F91E9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '12ECDFB90223F91E9C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 3, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=12ECDFB90223F91E9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': "{'user':'123'}"}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e757c675eb13438da5336', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=58A3D40172890EB09C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 352, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '58A3D40172890EB09C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-23 16_51_20', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=58A3D40172890EB09C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '58A3D40172890EB09C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 20, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=58A3D40172890EB09C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e738d91223e343e697b17', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=94CF719898AD14829C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 349, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '94CF719898AD14829C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-23 16_43_04', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=94CF719898AD14829C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '94CF719898AD14829C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 20, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=94CF719898AD14829C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e738d63d4f53444fe94ab', 'audience_authtype': 2, 'audience_pass': '321', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=C88687DAD351B6379C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestCreateRoom', 'desktop_audio': 1, 'helper_switch': 0, 'id': 350, 'inspector_authtype': 2, 'inspector_pass': '123', 'is_follow': '', 'light_mark': 1, 'live_roomid': 'C88687DAD351B6379C33DC5901307461', 'manual_record': 1, 'max_streams': 1, 'max_users': 15, 'mergetype': 1, 'name': 'autoTestCreate2018-08-23 16_42_53', 'platform': 1, 'ppt_support': True, 'presenter_out': True, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=C88687DAD351B6379C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 500, 'publisherpass': '123', 'record_bitrate': 0, 'recordstudent': 1, 'room_type': 2, 'roomid': 'C88687DAD351B6379C33DC5901307461', 'screen_lock': 1, 'show_exit': 0, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 500, 'talker_pass': '123', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=C88687DAD351B6379C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 2, 'video_zoom': '', 'warm_open': '1', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e738eb8ed453450047490', 'audience_authtype': 1, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=C29396956D1F95609C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': '实时课堂直播间', 'desktop_audio': 0, 'helper_switch': 0, 'id': 351, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': 'C29396956D1F95609C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-23 16_42_54', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=C29396956D1F95609C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': 'C29396956D1F95609C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 3, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=C29396956D1F95609C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': "{'user':'123'}"}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e715b675eb13438da5335', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=8DF14A1C8F62DD529C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 346, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '8DF14A1C8F62DD529C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-23 16_33_42', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=8DF14A1C8F62DD529C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '8DF14A1C8F62DD529C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 20, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=8DF14A1C8F62DD529C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e715bfda7b23437456c75', 'audience_authtype': 2, 'audience_pass': '321', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=B14D9646BB4B71DD9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestCreateRoom', 'desktop_audio': 1, 'helper_switch': 0, 'id': 347, 'inspector_authtype': 2, 'inspector_pass': '123', 'is_follow': '', 'light_mark': 1, 'live_roomid': 'B14D9646BB4B71DD9C33DC5901307461', 'manual_record': 1, 'max_streams': 1, 'max_users': 15, 'mergetype': 1, 'name': 'autoTestCreate2018-08-23 16_33_31', 'platform': 1, 'ppt_support': True, 'presenter_out': True, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=B14D9646BB4B71DD9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 500, 'publisherpass': '123', 'record_bitrate': 0, 'recordstudent': 1, 'room_type': 2, 'roomid': 'B14D9646BB4B71DD9C33DC5901307461', 'screen_lock': 1, 'show_exit': 0, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 500, 'talker_pass': '123', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=B14D9646BB4B71DD9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 2, 'video_zoom': '', 'warm_open': '1', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e715c2be73c3431a48179', 'audience_authtype': 1, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=24E81808B1A287CC9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': '实时课堂直播间', 'desktop_audio': 0, 'helper_switch': 0, 'id': 348, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '24E81808B1A287CC9C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-23 16_33_32', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=24E81808B1A287CC9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '24E81808B1A287CC9C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 3, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=24E81808B1A287CC9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': "{'user':'123'}"}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e5553fda7b23437456c73', 'audience_authtype': 2, 'audience_pass': '321', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=7D80A9B800DEB81E9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestCreateRoom', 'desktop_audio': 1, 'helper_switch': 0, 'id': 345, 'inspector_authtype': 2, 'inspector_pass': '123', 'is_follow': '', 'light_mark': 1, 'live_roomid': '7D80A9B800DEB81E9C33DC5901307461', 'manual_record': 1, 'max_streams': 10, 'max_users': 15, 'mergetype': 1, 'name': 'autoTestCreate2018-08-23 14_33_55', 'platform': 1, 'ppt_support': False, 'presenter_out': True, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=7D80A9B800DEB81E9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 500, 'publisherpass': '123', 'record_bitrate': 0, 'recordstudent': 1, 'room_type': 2, 'roomid': '7D80A9B800DEB81E9C33DC5901307461', 'screen_lock': 1, 'show_exit': 0, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 500, 'talker_pass': '123', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=7D80A9B800DEB81E9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 2, 'video_zoom': '', 'warm_open': '1', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e4b8f9c799b3456bfae1e', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=4018811ED4F7CB309C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 343, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '4018811ED4F7CB309C33DC5901307461', 'manual_record': 0, 'max_streams': 16, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-23 15_43_50', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=4018811ED4F7CB309C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '4018811ED4F7CB309C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 20, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=4018811ED4F7CB309C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e4b90675eb13438da5331', 'audience_authtype': 1, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=AE0B3CF3E864FC729C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': '实时课堂直播间', 'desktop_audio': 0, 'helper_switch': 0, 'id': 344, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': 'AE0B3CF3E864FC729C33DC5901307461', 'manual_record': 0, 'max_streams': 16, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-23 13_52_16', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=AE0B3CF3E864FC729C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': 'AE0B3CF3E864FC729C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 3, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=AE0B3CF3E864FC729C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': "{'user':'123'}"}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e1cd5a4afd035f908d945', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=42A8012C26122E399C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': '&lt;p&gt;er&lt;/p&gt;', 'desktop_audio': 0, 'helper_switch': 0, 'id': 342, 'inspector_authtype': 2, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '42A8012C26122E399C33DC5901307461', 'manual_record': 0, 'max_streams': 16, 'max_users': 30, 'mergetype': 2, 'name': 'autotest001', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=42A8012C26122E399C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '42A8012C26122E399C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=42A8012C26122E399C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '1', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7bdacdf16feb914eee5652', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=6453CC94054783A49C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-21', 'desc': '', 'desktop_audio': 0, 'helper_switch': 0, 'id': 340, 'inspector_authtype': 2, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '6453CC94054783A49C33DC5901307461', 'manual_record': 0, 'max_streams': 7, 'max_users': 30, 'mergetype': 2, 'name': 'test', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=6453CC94054783A49C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '6453CC94054783A49C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=6453CC94054783A49C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}], 'total': 29}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_b_list: 获取直播间列表成功：全传</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_2'>通过</button>
+    <div id='div_pt6_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_2'>通过</button>
+    <div id='div_pt6_2' class="collapse in">
+    <pre>
+    
+pt6_2: 请求url:https://ccapi-1.csslcloud.net/api/room/list?lines=100&amp;name=autoTestCreate2018-08-24+16_10_49&amp;page=1&amp;roomid=D709EE33E86FCC449C33DC5901307461&amp;status=10&amp;userid=99BB96FA148B8FAB&amp;time=1535098260&amp;hash=40EF99A83FC1CAF09BFA77C3D6133B45
+请求数据: {'userid': '99BB96FA148B8FAB', 'name': 'autoTestCreate2018-08-24 16_10_49', 'status': 10, 'page': 1, 'lines': 100, 'roomid': 'D709EE33E86FCC449C33DC5901307461'}
+返回数据：{'current': 1, 'result': 'OK', 'rooms': [], 'total': 0}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_c_list: 获取直播间列表失败：超范围</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_3'>通过</button>
+    <div id='div_pt6_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_3'>通过</button>
+    <div id='div_pt6_3' class="collapse in">
+    <pre>
+    
+pt6_3: 请求url:  https://ccapi-1.csslcloud.net/api/room/list?name=autoTestCreate2018-08-24+16_10_49&amp;status=30&amp;userid=99BB96FA148B8FAB&amp;time=1535098260&amp;hash=F0398E7DFA5C6F541CD6AE897989A3D7
+请求数据: {'userid': '99BB96FA148B8FAB', 'name': 'autoTestCreate2018-08-24 16_10_49', 'status': 30}
+返回数据：{'error': {'code': -1, 'message': '系统错误', 'type': 'TypeError'}, 'errorMsg': '系统错误', 'result': 'FAIL'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_g_Detail_test.LiveClassAPIDetailTest: 获取房间信息接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c7',1)" class="detail" id='c7'>详细</a></td>
+</tr>
+
+<tr id='pt7_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_detail: 获取房间信息成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt7_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_1'>通过</button>
+    <div id='div_pt7_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt7_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_1'>通过</button>
+    <div id='div_pt7_1' class="collapse in">
+    <pre>
+    
+pt7_1: 请求url:https://ccapi-1.csslcloud.net/api/room/room_detail?roomid=D709EE33E86FCC449C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098260&amp;hash=C710A8C7EB3E0468CDFE80EB7EFC1191
+请求数据: {'userid': '99BB96FA148B8FAB', 'roomid': 'D709EE33E86FCC449C33DC5901307461'}
+返回数据：{'data': {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7fbd872be73c3431a481a6', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=D709EE33E86FCC449C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 367, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': 'D709EE33E86FCC449C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-24 16_10_59', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=D709EE33E86FCC449C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': 'D709EE33E86FCC449C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=D709EE33E86FCC449C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_h_Link_test.LiveClassAPILinkTest: 获取房间登陆连接接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c8',1)" class="detail" id='c8'>详细</a></td>
+</tr>
+
+<tr id='pt8_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_link: 获取房间登陆连接成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt8_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt8_1'>通过</button>
+    <div id='div_pt8_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt8_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt8_1'>通过</button>
+    <div id='div_pt8_1' class="collapse in">
+    <pre>
+    
+pt8_1: 请求url:https://ccapi-1.csslcloud.net/api/room/link?roomid=D709EE33E86FCC449C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098260&amp;hash=C710A8C7EB3E0468CDFE80EB7EFC1191
+请求数据: {'userid': '99BB96FA148B8FAB', 'roomid': 'D709EE33E86FCC449C33DC5901307461'}
+返回数据：{'data': {'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=D709EE33E86FCC449C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=D709EE33E86FCC449C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=D709EE33E86FCC449C33DC5901307461&amp;userid=99BB96FA148B8FAB'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_i_SessionId_test.LiveClassAPICloseTest: 获取sessionid接口测试</td>
+    <td class="text-center">5</td>
+    <td class="text-center">4</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c9',5)" class="detail" id='c9'>详细</a></td>
+</tr>
+
+<tr id='pt9_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_role0: 获取sessionid成功：老师带密码</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt9_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt9_1'>通过</button>
+    <div id='div_pt9_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt9_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt9_1'>通过</button>
+    <div id='div_pt9_1' class="collapse in">
+    <pre>
+    
+pt9_1: 请求url:https://ccapi-1.csslcloud.net/api/room/create/sessionid?client=0&amp;name=testauto&amp;password=123&amp;role=0&amp;roomid=D709EE33E86FCC449C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098260&amp;hash=60CE471186BBA726FEB4B7780E227F03
+输入参数：{'name': 'testauto', 'userid': '99BB96FA148B8FAB', 'roomid': 'D709EE33E86FCC449C33DC5901307461', 'password': '123', 'role': '0', 'client': '0'}
+返回数据: {'data': {'sessionid': '73B95412C3913032DF9CBE3001FBF60F40CAE7930CA10440D8536AC3AA5C70373F77E470F463024E628B30D5E8195BEA', 'userid': '66f297538f2c47feb1a0b3bb63f54a67'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt9_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_b_role1: 获取sessionid成功：互动</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt9_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt9_2'>通过</button>
+    <div id='div_pt9_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt9_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt9_2'>通过</button>
+    <div id='div_pt9_2' class="collapse in">
+    <pre>
+    
+pt9_2: 请求url:https://ccapi-1.csslcloud.net/api/room/create/sessionid?client=0&amp;name=testauto&amp;role=1&amp;roomid=D709EE33E86FCC449C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098260&amp;hash=D86600F4045F0F883FFF84E44A63D339
+输入参数：{'name': 'testauto', 'userid': '99BB96FA148B8FAB', 'roomid': 'D709EE33E86FCC449C33DC5901307461', 'role': '1', 'client': '0'}
+返回数据: {'data': {'sessionid': 'EAE183361D4B25653655971F95E1294A3B1EFAECC14AD0F03F74CEE58A194A443F77E470F463024E6699F143B8B064D8', 'userid': '167af2ba5bfc47fbb8de8de0731fea1b'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt9_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_c_role2: 获取sessionid成功：旁听</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt9_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt9_3'>通过</button>
+    <div id='div_pt9_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt9_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt9_3'>通过</button>
+    <div id='div_pt9_3' class="collapse in">
+    <pre>
+    
+pt9_3: 请求url:https://ccapi-1.csslcloud.net/api/room/create/sessionid?client=0&amp;name=testauto&amp;role=2&amp;roomid=D709EE33E86FCC449C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098261&amp;hash=312A90608E3F356C170101C41A54EEC8
+输入参数：{'name': 'testauto', 'userid': '99BB96FA148B8FAB', 'roomid': 'D709EE33E86FCC449C33DC5901307461', 'role': '1', 'client': '0'}
+返回数据: {'data': {'sessionid': 'BF7102E01C7ED80D6CD10C8E88BC225BB640E696473334A0AF4680216F6579423F77E470F463024E695F1FA317E38FE5', 'userid': 'ac3052f10d7a4a2096b291af5eb0b04f'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt9_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_d_client1: 获取sessionid成功：移动端</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt9_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt9_4'>通过</button>
+    <div id='div_pt9_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt9_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt9_4'>通过</button>
+    <div id='div_pt9_4' class="collapse in">
+    <pre>
+    
+pt9_4: 请求url:https://ccapi-1.csslcloud.net/api/room/create/sessionid?client=1&amp;name=testauto&amp;role=1&amp;roomid=D709EE33E86FCC449C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098261&amp;hash=C0B199EBA9C3EC74E70586826C6044C1
+输入参数：{'name': 'testauto', 'userid': '99BB96FA148B8FAB', 'roomid': 'D709EE33E86FCC449C33DC5901307461', 'role': '1', 'client': '1'}
+返回数据: {'data': {'sessionid': '7769EB3E5E2BF5BEAC2ACCD56969CD55A60C70E83D429646FB27F0955F8B04F03F77E470F463024EB3FD99CF21ABD8B6', 'userid': 'f9ffbd5f6d81400c95a4575fb2918563'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft9_5' class='none'>
+    <td class='failCase'><div class='testcase'>test_e_client1: 获取sessionid失败：超范围</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft9_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft9_5'>失败</button>
+    <div id='div_ft9_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft9_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft9_5'>失败</button>
+    <div id='div_ft9_5' class="collapse in">
+    <pre>
+    
+ft9_5: 请求url:https://ccapi-1.csslcloud.net/api/room/create/sessionid?client=1&amp;name=testauto&amp;role=4&amp;roomid=D709EE33E86FCC449C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098261&amp;hash=FF2105878384EC1E4E4B816B44ACCC49
+输入参数：{'name': 'testauto', 'userid': '99BB96FA148B8FAB', 'roomid': 'D709EE33E86FCC449C33DC5901307461', 'role': '4', 'client': '1'}
+返回数据: {'error': {'code': -1, 'message': '系统错误', 'type': 'TypeError'}, 'errorMsg': '系统错误', 'result': 'FAIL'}
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_i_SessionId_test.py", line 91, in test_e_client1
+    self.assertEqual(r['result'],'OK')
+AssertionError: 'FAIL' != 'OK'
+- FAIL
++ OK
+
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_j_Chatmsg_test.LiveClassAPIChatmsgTest: 获取聊天信息接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c10',1)" class="detail" id='c10'>详细</a></td>
+</tr>
+
+<tr id='ft10_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_chatmsg: 获取聊天信息成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft10_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft10_1'>失败</button>
+    <div id='div_ft10_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft10_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft10_1'>失败</button>
+    <div id='div_ft10_1' class="collapse in">
+    <pre>
+    
+ft10_1: 404 Client Error: NOT FOUND for url: https://ccapi-1.csslcloud.net/api/live/chatmsg?liveid=3DC85D781667C629&amp;roomid=42A8012C26122E399C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098261&amp;hash=11D2866DC6F276EBD63AA31F4D50671B
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_j_Chatmsg_test.py", line 28, in test_a_chatmsg
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_k_Record_test.LiveClassAPIRecordTest: 查询回放列表接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c11',1)" class="detail" id='c11'>详细</a></td>
+</tr>
+
+<tr id='ft11_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_record: 查询回访列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft11_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft11_1'>失败</button>
+    <div id='div_ft11_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft11_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft11_1'>失败</button>
+    <div id='div_ft11_1' class="collapse in">
+    <pre>
+    
+ft11_1: 404 Client Error: NOT FOUND for url: https://ccapi-1.csslcloud.net/api/v2/record/info?roomid=42A8012C26122E399C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535098261&amp;hash=BA6B8D0951FDF56AE2C2CFBEA6102294
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_k_Record_test.py", line 28, in test_a_record
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_l_Rearch_test.LiveClassAPISearchTest: 查询回放信息接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c12',1)" class="detail" id='c12'>详细</a></td>
+</tr>
+
+<tr id='ft12_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_search: 查询回放信息成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft12_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft12_1'>失败</button>
+    <div id='div_ft12_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft12_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft12_1'>失败</button>
+    <div id='div_ft12_1' class="collapse in">
+    <pre>
+    
+ft12_1: 404 Client Error: NOT FOUND for url: https://ccapi-1.csslcloud.net/api/v2/record/search?recordid=BD6689A20F863100&amp;userid=99BB96FA148B8FAB&amp;time=1535098261&amp;hash=63A1BF613F7A5371B192046D00B6358E
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_l_Rearch_test.py", line 28, in test_a_search
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_m_Add_test.LiveClassAPIAddTest: 上传文档接口测试</td>
+    <td class="text-center">2</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c13',2)" class="detail" id='c13'>详细</a></td>
+</tr>
+
+<tr id='pt13_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_add: 获取文档上传信息表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt13_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt13_1'>通过</button>
+    <div id='div_pt13_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt13_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt13_1'>通过</button>
+    <div id='div_pt13_1' class="collapse in">
+    <pre>
+    
+pt13_1: 'userid'
+输入参数：https://ccapi-1.csslcloud.net/api/v1/doc/add?account_id=99BB96FA148B8FAB&amp;doc_name=test&amp;doc_size=11588&amp;time=1535098261&amp;hash=7C8F44F7A3A208026A38D826D1B388DC
+返回数据: {'data': {'upload_url': 'https://document.csslcloud.net/api/document/upload?userid=41E8063FC799ACE5&amp;docid=4E6D3232674E5B6A'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt13_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_b_add: 文档上传成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt13_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt13_2'>通过</button>
+    <div id='div_pt13_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt13_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt13_2'>通过</button>
+    <div id='div_pt13_2' class="collapse in">
+    <pre>
+    
+pt13_2: 'userid'
+请求url:https://document.csslcloud.net/api/document/upload?userid=41E8063FC799ACE5&amp;docid=4E6D3232674E5B6A
+上传文档操作:
+返回数据: {'datas': {'docId': '4E6D3232674E5B6A'}, 'errorCode': 0, 'success': True}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_n_Delete_test.LiveClassAPIDeleteTest: 删除文档接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c14',1)" class="detail" id='c14'>详细</a></td>
+</tr>
+
+<tr id='pt14_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 获取直播间列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt14_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt14_1'>通过</button>
+    <div id='div_pt14_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt14_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt14_1'>通过</button>
+    <div id='div_pt14_1' class="collapse in">
+    <pre>
+    
+pt14_1: 'userid'
+请求url:https://ccapi-1.csslcloud.net/api/v1/doc/delete?account_id=99BB96FA148B8FAB&amp;doc_id=4E6D3232674E5B6A&amp;time=1535098262&amp;hash=79BCF8B6C24059EBE14301656BB875BB
+输入参数：{'doc_id': '4E6D3232674E5B6A', 'account_id': '99BB96FA148B8FAB'}
+返回数据: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_o_DocList_test.LiveClassAPIDocListTest: 查询文档接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c15',1)" class="detail" id='c15'>详细</a></td>
+</tr>
+
+<tr id='pt15_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 获取共享文档列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt15_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt15_1'>通过</button>
+    <div id='div_pt15_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt15_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt15_1'>通过</button>
+    <div id='div_pt15_1' class="collapse in">
+    <pre>
+    
+pt15_1: 'userid'
+请求url:https://ccapi-1.csslcloud.net/api/v1/doc/list?account_id=99BB96FA148B8FAB&amp;time=1535098262&amp;hash=00ADC74AD1763C1EA40010D570B17356
+输入参数：{'account_id': '99BB96FA148B8FAB'}
+返回数据: {'current': 1, 'data': '', 'docs': [], 'picDomain': 'https://image.csslcloud.net', 'result': 'OK', 'total': 0}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_p_Auth_test.LiveClassAPIAuthTest: 获取房间文档列表接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c16',1)" class="detail" id='c16'>详细</a></td>
+</tr>
+
+<tr id='pt16_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 获取房间文档列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt16_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt16_1'>通过</button>
+    <div id='div_pt16_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt16_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt16_1'>通过</button>
+    <div id='div_pt16_1' class="collapse in">
+    <pre>
+    
+pt16_1: 'userid'
+请求url:https://ccapi-1.csslcloud.net/api/v1/doc/auth/list?account_id=99BB96FA148B8FAB&amp;room_id=42A8012C26122E399C33DC5901307461&amp;time=1535098262&amp;hash=8D26627CFDCED5D55DC98C7AA1255998
+输入参数：{'account_id': '99BB96FA148B8FAB', 'room_id': '42A8012C26122E399C33DC5901307461'}
+返回数据: {'current': 1, 'data': '', 'docs': [], 'picDomain': 'https://image.csslcloud.net', 'result': 'OK', 'total': 0}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_q_Relate_test.LiveClassAPIRelateTest: 文档关联接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c17',1)" class="detail" id='c17'>详细</a></td>
+</tr>
+
+<tr id='pt17_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 文档关联成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt17_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt17_1'>通过</button>
+    <div id='div_pt17_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt17_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt17_1'>通过</button>
+    <div id='div_pt17_1' class="collapse in">
+    <pre>
+    
+pt17_1: 'userid'
+请求url:https://ccapi-1.csslcloud.net/api/v1/doc/relate?account_id=99BB96FA148B8FAB&amp;doc_id=4E6D3232674E5B6A&amp;room_id=D709EE33E86FCC449C33DC5901307461&amp;time=1535098262&amp;hash=7294D505C1E9263E71A5C2259A4814D1
+输入参数：{'account_id': '99BB96FA148B8FAB', 'room_id': 'D709EE33E86FCC449C33DC5901307461', 'doc_id': '4E6D3232674E5B6A'}
+返回数据: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_r_Unrelate_test.LiveClassAPIUnrelateTest: 取消文档关联接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c18',1)" class="detail" id='c18'>详细</a></td>
+</tr>
+
+<tr id='pt18_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 取消文档关联成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt18_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt18_1'>通过</button>
+    <div id='div_pt18_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt18_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt18_1'>通过</button>
+    <div id='div_pt18_1' class="collapse in">
+    <pre>
+    
+pt18_1: 'userid'
+请求url:https://ccapi-1.csslcloud.net/api/v1/doc/unrelate?account_id=99BB96FA148B8FAB&amp;doc_id=4E6D3232674E5B6A&amp;room_id=D709EE33E86FCC449C33DC5901307461&amp;time=1535098262&amp;hash=7294D505C1E9263E71A5C2259A4814D1
+输入参数：{'account_id': '99BB96FA148B8FAB', 'room_id': 'D709EE33E86FCC449C33DC5901307461', 'doc_id': '4E6D3232674E5B6A'}
+返回数据: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_s_Video_test.LiveClassAPIVideoTest: 上传视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c19',1)" class="detail" id='c19'>详细</a></td>
+</tr>
+
+<tr id='pt19_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 生成上传接口成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt19_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt19_1'>通过</button>
+    <div id='div_pt19_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt19_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt19_1'>通过</button>
+    <div id='div_pt19_1' class="collapse in">
+    <pre>
+    
+pt19_1: 'userid'
+下面是接口返回:
+{'success': 'true', 'videoUploadInfo': {'chunkurl': 'https://1-15-vacombiner.bokecc.com/servlet/uploadchunk/v2', 'createtime': '2018-08-24', 'encodetype': '100+101+102+210+220', 'logotype': None, 'metaurl': 'https://1-15-vacombiner.bokecc.com/servlet/uploadmeta/v2', 'priority': '3', 'server': 'http://1-15-vacombiner.bokecc.com/', 'servicetype': '100', 'userid': '99BB96FA148B8FAB', 'videoid': 'F2B804B77300167B13358DE27D943A99'}}
+请求url:https://ccapi-1.csslcloud.net/api/v1/video/createuploadinfo?account_id=99BB96FA148B8FAB&amp;filename=autotest001&amp;title=autotest001&amp;time=1535098262&amp;hash=D64B4908D39F6B73F3E80916C45B206D
+输入参数：{'account_id': '99BB96FA148B8FAB', 'title': 'autotest001', 'filename': 'autotest001'}
+返回数据: {'success': 'true', 'videoUploadInfo': {'chunkurl': 'https://1-15-vacombiner.bokecc.com/servlet/uploadchunk/v2', 'createtime': '2018-08-24', 'encodetype': '100+101+102+210+220', 'logotype': None, 'metaurl': 'https://1-15-vacombiner.bokecc.com/servlet/uploadmeta/v2', 'priority': '3', 'server': 'http://1-15-vacombiner.bokecc.com/', 'servicetype': '100', 'userid': '99BB96FA148B8FAB', 'videoid': 'F2B804B77300167B13358DE27D943A99'}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_t_Video_test.LiveClassAPIVideoTest: 关联视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c20',1)" class="detail" id='c20'>详细</a></td>
+</tr>
+
+<tr id='pt20_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 生成上传接口成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt20_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt20_1'>通过</button>
+    <div id='div_pt20_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt20_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt20_1'>通过</button>
+    <div id='div_pt20_1' class="collapse in">
+    <pre>
+    
+pt20_1: 'userid'
+输入参数：{'account_id': '99BB96FA148B8FAB', 'room_id': '42A8012C26122E399C33DC5901307461', 'video_id': '806FA30B438D98A6FC9558351D509E7C'}
+返回数据: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_u_Video_test.LiveClassAPIVideoTest: 查询房间已关联的媒体接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c21',1)" class="detail" id='c21'>详细</a></td>
+</tr>
+
+<tr id='pt21_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 查询房间已关联的媒体成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt21_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt21_1'>通过</button>
+    <div id='div_pt21_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt21_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt21_1'>通过</button>
+    <div id='div_pt21_1' class="collapse in">
+    <pre>
+    
+pt21_1: 'userid'
+输入参数：{'account_id': '99BB96FA148B8FAB', 'room_id': '42A8012C26122E399C33DC5901307461'}
+返回数据: {'result': 'OK', 'videos': {'total': 1, 'video': [{'category': 'A6EDC3AE8F5594AF', 'creation-time': '2018-08-23 10:20:52', 'desp': '', 'duration': 7, 'filesize': 871432, 'hasvideofile': 0, 'id': '806FA30B438D98A6FC9558351D509E7C', 'is_warm': 0, 'isvalid': 0, 'mediaType': 1, 'playurl': '', 'status': 0, 'tags': ' ', 'title': 'autotest001.mp4', 'type': 10, 'uploaduserid': '99BB96FA148B8FAB', 'userid': '99BB96FA148B8FAB'}]}}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_v_Video_test.LiveClassAPIVideoTest: 设为暖场视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c22',1)" class="detail" id='c22'>详细</a></td>
+</tr>
+
+<tr id='pt22_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 设为暖场视频成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt22_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt22_1'>通过</button>
+    <div id='div_pt22_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt22_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt22_1'>通过</button>
+    <div id='div_pt22_1' class="collapse in">
+    <pre>
+    
+pt22_1: 'userid'
+输入参数：{'account_id': '99BB96FA148B8FAB', 'room_id': '42A8012C26122E399C33DC5901307461', 'video_id': '806FA30B438D98A6FC9558351D509E7C'}
+返回数据: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_w_Video_test.LiveClassAPIVideoTest: 取消暖场视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c23',1)" class="detail" id='c23'>详细</a></td>
+</tr>
+
+<tr id='pt23_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 取消暖场视频成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt23_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt23_1'>通过</button>
+    <div id='div_pt23_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt23_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt23_1'>通过</button>
+    <div id='div_pt23_1' class="collapse in">
+    <pre>
+    
+pt23_1: 'userid'
+输入参数：{'account_id': '99BB96FA148B8FAB', 'room_id': '42A8012C26122E399C33DC5901307461', 'video_id': '806FA30B438D98A6FC9558351D509E7C'}
+返回数据: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_x_Video_test.LiveClassAPIVideoTest: 取消关联视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c24',1)" class="detail" id='c24'>详细</a></td>
+</tr>
+
+<tr id='pt24_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 取消关联视频成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt24_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt24_1'>通过</button>
+    <div id='div_pt24_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt24_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt24_1'>通过</button>
+    <div id='div_pt24_1' class="collapse in">
+    <pre>
+    
+pt24_1: 'userid'
+输入参数：{'account_id': '99BB96FA148B8FAB', 'room_id': '42A8012C26122E399C33DC5901307461', 'video_id': '806FA30B438D98A6FC9558351D509E7C'}
+返回数据: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_z_Close_test.LiveClassAPICloseTest: 关闭直播间接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c25',1)" class="detail" id='c25'>详细</a></td>
+</tr>
+
+<tr id='pt25_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_update: 关闭直播间成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt25_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt25_1'>通过</button>
+    <div id='div_pt25_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt25_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt25_1'>通过</button>
+    <div id='div_pt25_1' class="collapse in">
+    <pre>
+    
+pt25_1: 输入参数：{'userid': '99BB96FA148B8FAB', 'roomid': 'D709EE33E86FCC449C33DC5901307461'}
+返回数据: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='total_row' class="text-center active">
+    <td>总计</td>
+    <td>38</td>
+    <td>33</td>
+    <td>5</td>
+    <td>0</td>
+    <td>通过率：86.84%</td>
+</tr>
+</table>
+
+<div id='ending'>&nbsp;</div>
+    <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+    <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+    </span></a></div>
+    
+</body>
+</html>

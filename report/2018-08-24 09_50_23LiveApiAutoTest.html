@@ -1,0 +1,1257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>LiveClassAPI接口测试</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2.2"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+<style type="text/css" media="screen">
+body        { font-family: Microsoft YaHei,Tahoma,arial,helvetica,sans-serif;padding: 20px; font-size: 80%; }
+table       { font-size: 100%; }
+/* -- heading ---------------------------------------------------------------------- */
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+/* -- report ------------------------------------------------------------------------ */
+#total_row  { font-weight: bold; }
+.passCase   { color: #5cb85c; }
+.failCase   { color: #d9534f; font-weight: bold; }
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+</style>
+
+</head>
+<body >
+<script language="javascript" type="text/javascript">
+output_list = Array();
+/*level 调整增加只显示通过用例的分类 --Findyou
+0:Summary //all hiddenRow
+1:Failed  //pt hiddenRow, ft none
+2:Pass    //pt none, ft hiddenRow
+3:All     //pt none, ft none
+*/
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level == 2 || level == 0 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level < 2) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+    }
+    //加入【详细】切换文字变化 --Findyou
+    detail_class=document.getElementsByClassName('detail');
+	//console.log(detail_class.length)
+	if (level == 3) {
+		for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="收起"
+		}
+	}
+	else{
+			for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="详细"
+		}
+	}
+}
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        //ID修改 点 为 下划线 -Findyou
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+        if (toHide) {
+            document.getElementById(tid).className = 'hiddenRow';
+            document.getElementById(cid).innerText = "详细"
+        }
+        else {
+            document.getElementById(tid).className = '';
+            document.getElementById(cid).innerText = "收起"
+        }
+    }
+}
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+</script>
+<div class='heading'>
+<h1 style="font-family: Microsoft YaHei">LiveClassAPI接口测试</h1>
+<p class='attribute'><strong>开始时间 : </strong> 2018-08-24 09:50:23</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:03.189046</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 35，通过 9，失败 9，错误 17，通过率= 25.71%</p>
+
+<p class='description'>详情请下载附件查看：</p>
+</div>
+
+
+<p id='show_detail_line'>
+<a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 25.71% }</a>
+<a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 9 }</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过{ 9 }</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 35 }</a>
+</p>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 14px;">
+    <td>报告列表</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>失败</td>
+    <td>错误</td>
+    <td>详细</td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_a_Create_test.LiveClassAPICreateTest: 创建直播间接口测试</td>
+    <td class="text-center">4</td>
+    <td class="text-center">3</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',4)" class="detail" id='c1'>详细</a></td>
+</tr>
+
+<tr id='pt1_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_create: 创建直播间成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse in">
+    <pre>
+    
+pt1_1: 请求url:https://ccapi-1.csslcloud.net/api/room/create?audience_authtype=2&amp;desc=autoTestCreateRoom&amp;name=autoTestCreate2018-08-24+09_50_23&amp;publisherpass=123&amp;room_type=2&amp;talker_authtype=2&amp;userid=99BB96FA148B8FAB&amp;time=1535075423&amp;hash=E47AF89B0719FABBB1C2B6CD5150710A
+输入参数：{'userid': '99BB96FA148B8FAB', 'name': 'autoTestCreate2018-08-24 09_50_23', 'room_type': 2, 'publisherpass': '123', 'audience_authtype': 2, 'talker_authtype': 2, 'desc': 'autoTestCreateRoom'}
+返回数据: {'data': {'roomid': '0BC7898E0AAFB0CF9C33DC5901307461'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_b_create: 创建直播间：全填</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+    <div id='div_pt1_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+    <div id='div_pt1_2' class="collapse in">
+    <pre>
+    
+pt1_2: 请求url:https://ccapi-1.csslcloud.net/api/room/create?audience_authtype=2&amp;audience_pass=321&amp;classtype=2&amp;desc=autoTestCreateRoom&amp;desktop_audio=1&amp;inspector_authtype=2&amp;inspector_pass=123&amp;light_mark=1&amp;manual_record=1&amp;max_streams=1&amp;max_users=15&amp;mergetype=1&amp;name=autoTestCreate2018-08-24+09_50_24&amp;ppt_support=True&amp;presenter_out=True&amp;publisher_bitrate=500&amp;publisherpass=123&amp;record_bitrate=0&amp;room_type=2&amp;screen_lock=1&amp;show_exit=0&amp;talker_authtype=2&amp;talker_bitrate=500&amp;talker_pass=123&amp;templatetype=1&amp;userid=99BB96FA148B8FAB&amp;video_mode=2&amp;warm_open=1&amp;time=1535075424&amp;hash=8AE82F6B32D6D7C8D7434B05C6455415
+输入参数：{'userid': '99BB96FA148B8FAB', 'name': 'autoTestCreate2018-08-24 09_50_24', 'room_type': 2, 'publisherpass': '123', 'audience_authtype': 2, 'audience_pass': '321', 'talker_pass': '123', 'inspector_authtype': '2', 'talker_authtype': 2, 'inspector_pass': '123', 'templatetype': '1', 'mergetype': '1', 'max_users': '15', 'max_streams': '1', 'desc': 'autoTestCreateRoom', 'video_mode': '2', 'talker_bitrate': '500', 'publisher_bitrate': '500', 'classtype': '2', 'presenter_out': True, 'light_mark': '1', 'show_exit': '0', 'ppt_support': True, 'screen_lock': '1', 'desktop_audio': '1', 'manual_record': '1', 'record_bitrate': '0', 'warm_open': '1'}
+返回数据: {'data': {'roomid': 'C9C1AD01F54D51189C33DC5901307461'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_c_create: 创建直播间：白名单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse in">
+    <pre>
+    
+pt1_3: 请求url:https://ccapi-1.csslcloud.net/api/room/create?name=autoTestCreate2018-08-24+09_50_24&amp;publisherpass=123&amp;room_type=2&amp;talker_authtype=3&amp;userid=99BB96FA148B8FAB&amp;white_list=%7B%27user%27%3A%27123%27%7D&amp;time=1535075424&amp;hash=117959560F32ACD4935585AF294B8B86
+输入参数：{'userid': '99BB96FA148B8FAB', 'name': 'autoTestCreate2018-08-24 09_50_24', 'room_type': 2, 'publisherpass': '123', 'talker_authtype': 3, 'white_list': "{'user':'123'}"}
+返回数据: {'data': {'roomid': '12A4F28867D698909C33DC5901307461'}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft1_4' class='none'>
+    <td class='failCase'><div class='testcase'>test_d_create: 创建直播间：超范围参数</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_4'>失败</button>
+    <div id='div_ft1_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_4'>失败</button>
+    <div id='div_ft1_4' class="collapse in">
+    <pre>
+    
+ft1_4: No connection adapters were found for '{'userid': '99BB96FA148B8FAB', 'name': 'autoTestCreate2018-08-24 09_50_24', 'room_type': 5, 'publisherpass': '123', 'talker_authtype': 2}'
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_a_Create_test.py", line 84, in test_d_create
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_b_Start_test.LiveClassAPIStartTest: 开始直播接口测试</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">2</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c2',2)" class="detail" id='c2'>详细</a></td>
+</tr>
+
+<tr id='ft2_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_start: 开始直播成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_1'>错误</button>
+    <div id='div_ft2_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_1'>错误</button>
+    <div id='div_ft2_1' class="collapse in">
+    <pre>
+    
+ft2_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_b_Start_test.py", line 19, in setUp
+    start_data,nouserid_data = t.get_thqs(self.start_data),t.get_thqs(self.nouserid_data)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 37, in get_thqs
+    API_KEY = self.bl_id(q)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 28, in bl_id
+    if q['userid'] == "99BB96FA148B8FAB":
+KeyError: 'userid'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_b_start: 开始直播成功：不传userid</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_2'>错误</button>
+    <div id='div_ft2_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_2'>错误</button>
+    <div id='div_ft2_2' class="collapse in">
+    <pre>
+    
+ft2_2: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_b_Start_test.py", line 19, in setUp
+    start_data,nouserid_data = t.get_thqs(self.start_data),t.get_thqs(self.nouserid_data)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 37, in get_thqs
+    API_KEY = self.bl_id(q)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 28, in bl_id
+    if q['userid'] == "99BB96FA148B8FAB":
+KeyError: 'userid'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_c_Stop_test.LiveClassAPIStopTest: 停止直播接口测试</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">2</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c3',2)" class="detail" id='c3'>详细</a></td>
+</tr>
+
+<tr id='ft3_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_stop: 停止直播成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft3_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft3_1'>错误</button>
+    <div id='div_ft3_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft3_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft3_1'>错误</button>
+    <div id='div_ft3_1' class="collapse in">
+    <pre>
+    
+ft3_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_c_Stop_test.py", line 19, in setUp
+    nouserid_data = t.get_thqs(self.nouserid_data)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 37, in get_thqs
+    API_KEY = self.bl_id(q)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 28, in bl_id
+    if q['userid'] == "99BB96FA148B8FAB":
+KeyError: 'userid'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft3_2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_b_stop: 停止直播成功:不传userid</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft3_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft3_2'>错误</button>
+    <div id='div_ft3_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft3_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft3_2'>错误</button>
+    <div id='div_ft3_2' class="collapse in">
+    <pre>
+    
+ft3_2: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_c_Stop_test.py", line 19, in setUp
+    nouserid_data = t.get_thqs(self.nouserid_data)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 37, in get_thqs
+    API_KEY = self.bl_id(q)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 28, in bl_id
+    if q['userid'] == "99BB96FA148B8FAB":
+KeyError: 'userid'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_d_Update_test.LiveClassAPIUpdateTest: 编辑直播间接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c4',1)" class="detail" id='c4'>详细</a></td>
+</tr>
+
+<tr id='pt4_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_update: 更新直播间成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_1'>通过</button>
+    <div id='div_pt4_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_1'>通过</button>
+    <div id='div_pt4_1' class="collapse in">
+    <pre>
+    
+pt4_1: 请求url:https://ccapi-1.csslcloud.net/api/room/update?allow_audio=True&amp;allow_chat=True&amp;allow_speak=True&amp;audience_authtype=2&amp;desc=autoTestUpdateRoom&amp;live_roomid=0BC7898E0AAFB0CF9C33DC5901307461&amp;name=autoTestUpdate2018-08-24+09_50_24&amp;publisherpass=123&amp;room_type=2&amp;talker_authtype=2&amp;userid=99BB96FA148B8FAB&amp;time=1535075424&amp;hash=E5560B1B028B746B228BA4F9A156AFD0
+请求数据: {'userid': '99BB96FA148B8FAB', 'live_roomid': '0BC7898E0AAFB0CF9C33DC5901307461', 'name': 'autoTestUpdate2018-08-24 09_50_24', 'room_type': 2, 'publisherpass': '123', 'audience_authtype': 2, 'talker_authtype': 2, 'desc': 'autoTestUpdateRoom', 'allow_chat': True, 'allow_audio': True, 'allow_speak': True}
+返回数据：{'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_e_SetSingle_test.LiveClassAPISetTest: 切换合流布局模式接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c5',1)" class="detail" id='c5'>详细</a></td>
+</tr>
+
+<tr id='pt5_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_setSingle: 切换合流布局模式成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_1'>通过</button>
+    <div id='div_pt5_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_1'>通过</button>
+    <div id='div_pt5_1' class="collapse in">
+    <pre>
+    
+pt5_1: 请求url:https://ccapi-1.csslcloud.net/api/room/set_single?roomid=0BC7898E0AAFB0CF9C33DC5901307461&amp;status=2&amp;userid=99BB96FA148B8FAB&amp;time=1535075425&amp;hash=6EE50BC2F413787C9CFDA9ABC28E91B3
+请求数据: {'userid': '99BB96FA148B8FAB', 'roomid': '0BC7898E0AAFB0CF9C33DC5901307461', 'status': 2}
+返回数据：{'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_f_List_test.LiveClassAPIListTest: 获取直播间列表接口测试</td>
+    <td class="text-center">2</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c6',2)" class="detail" id='c6'>详细</a></td>
+</tr>
+
+<tr id='pt6_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_list: 获取直播间列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_1'>通过</button>
+    <div id='div_pt6_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_1'>通过</button>
+    <div id='div_pt6_1' class="collapse in">
+    <pre>
+    
+pt6_1: 请求url:https://ccapi-1.csslcloud.net/api/room/list?userid=99BB96FA148B8FAB&amp;time=1535075425&amp;hash=942CB29F06905A688169DB7AB68A0CDE
+请求数据: {'userid': '99BB96FA148B8FAB'}
+返回数据：{'current': 1, 'result': 'OK', 'rooms': [{'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7f645f675eb13438da5340', 'audience_authtype': 2, 'audience_pass': '321', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=C9C1AD01F54D51189C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': 'autoTestCreateRoom', 'desktop_audio': 1, 'helper_switch': 0, 'id': 359, 'inspector_authtype': 2, 'inspector_pass': '123', 'is_follow': '', 'light_mark': 1, 'live_roomid': 'C9C1AD01F54D51189C33DC5901307461', 'manual_record': 1, 'max_streams': 1, 'max_users': 15, 'mergetype': 1, 'name': 'autoTestCreate2018-08-24 09_50_24', 'platform': 1, 'ppt_support': True, 'presenter_out': True, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=C9C1AD01F54D51189C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 500, 'publisherpass': '123', 'record_bitrate': 0, 'recordstudent': 1, 'room_type': 2, 'roomid': 'C9C1AD01F54D51189C33DC5901307461', 'screen_lock': 1, 'show_exit': 0, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 500, 'talker_pass': '123', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=C9C1AD01F54D51189C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 2, 'video_zoom': '', 'warm_open': '1', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7f6460fda7b23437456c7f', 'audience_authtype': 1, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=12A4F28867D698909C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': '实时课堂直播间', 'desktop_audio': 0, 'helper_switch': 0, 'id': 360, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '12A4F28867D698909C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-24 09_50_24', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=12A4F28867D698909C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '12A4F28867D698909C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 3, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=12A4F28867D698909C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': "{'user':'123'}"}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7f645f9c799b3456bfae2b', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=0BC7898E0AAFB0CF9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 358, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '0BC7898E0AAFB0CF9C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-24 09_50_24', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=0BC7898E0AAFB0CF9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '0BC7898E0AAFB0CF9C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=0BC7898E0AAFB0CF9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e776563d4f53444fe94ac', 'audience_authtype': 2, 'audience_pass': '321', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=35E0A62E43BD54AE9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestCreateRoom', 'desktop_audio': 1, 'helper_switch': 0, 'id': 356, 'inspector_authtype': 2, 'inspector_pass': '123', 'is_follow': '', 'light_mark': 1, 'live_roomid': '35E0A62E43BD54AE9C33DC5901307461', 'manual_record': 1, 'max_streams': 1, 'max_users': 15, 'mergetype': 1, 'name': 'autoTestCreate2018-08-23 16_59_17', 'platform': 1, 'ppt_support': True, 'presenter_out': True, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=35E0A62E43BD54AE9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 500, 'publisherpass': '123', 'record_bitrate': 0, 'recordstudent': 1, 'room_type': 2, 'roomid': '35E0A62E43BD54AE9C33DC5901307461', 'screen_lock': 1, 'show_exit': 0, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 500, 'talker_pass': '123', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=35E0A62E43BD54AE9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 2, 'video_zoom': '', 'warm_open': '1', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e7765b8ed453450047491', 'audience_authtype': 1, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=F6242E9F0C6A959D9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': '实时课堂直播间', 'desktop_audio': 0, 'helper_switch': 0, 'id': 357, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': 'F6242E9F0C6A959D9C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-23 16_59_17', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=F6242E9F0C6A959D9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': 'F6242E9F0C6A959D9C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 3, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=F6242E9F0C6A959D9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': "{'user':'123'}"}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e776591223e343e697b18', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=BFFD01C1442891AF9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 355, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': 'BFFD01C1442891AF9C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-23 16_59_29', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=BFFD01C1442891AF9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': 'BFFD01C1442891AF9C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 20, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=BFFD01C1442891AF9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e757cfda7b23437456c76', 'audience_authtype': 2, 'audience_pass': '321', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=A04CD5BB188EE6969C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestCreateRoom', 'desktop_audio': 1, 'helper_switch': 0, 'id': 353, 'inspector_authtype': 2, 'inspector_pass': '123', 'is_follow': '', 'light_mark': 1, 'live_roomid': 'A04CD5BB188EE6969C33DC5901307461', 'manual_record': 1, 'max_streams': 1, 'max_users': 15, 'mergetype': 1, 'name': 'autoTestCreate2018-08-23 16_51_08', 'platform': 1, 'ppt_support': True, 'presenter_out': True, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=A04CD5BB188EE6969C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 500, 'publisherpass': '123', 'record_bitrate': 0, 'recordstudent': 1, 'room_type': 2, 'roomid': 'A04CD5BB188EE6969C33DC5901307461', 'screen_lock': 1, 'show_exit': 0, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 500, 'talker_pass': '123', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=A04CD5BB188EE6969C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 2, 'video_zoom': '', 'warm_open': '1', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e757c2be73c3431a4817a', 'audience_authtype': 1, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=12ECDFB90223F91E9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': '实时课堂直播间', 'desktop_audio': 0, 'helper_switch': 0, 'id': 354, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '12ECDFB90223F91E9C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-23 16_51_08', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=12ECDFB90223F91E9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '12ECDFB90223F91E9C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 3, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=12ECDFB90223F91E9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': "{'user':'123'}"}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e757c675eb13438da5336', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=58A3D40172890EB09C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 352, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '58A3D40172890EB09C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-23 16_51_20', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=58A3D40172890EB09C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '58A3D40172890EB09C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 20, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=58A3D40172890EB09C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e738d91223e343e697b17', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=94CF719898AD14829C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 349, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '94CF719898AD14829C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-23 16_43_04', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=94CF719898AD14829C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '94CF719898AD14829C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 20, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=94CF719898AD14829C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e738d63d4f53444fe94ab', 'audience_authtype': 2, 'audience_pass': '321', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=C88687DAD351B6379C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestCreateRoom', 'desktop_audio': 1, 'helper_switch': 0, 'id': 350, 'inspector_authtype': 2, 'inspector_pass': '123', 'is_follow': '', 'light_mark': 1, 'live_roomid': 'C88687DAD351B6379C33DC5901307461', 'manual_record': 1, 'max_streams': 1, 'max_users': 15, 'mergetype': 1, 'name': 'autoTestCreate2018-08-23 16_42_53', 'platform': 1, 'ppt_support': True, 'presenter_out': True, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=C88687DAD351B6379C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 500, 'publisherpass': '123', 'record_bitrate': 0, 'recordstudent': 1, 'room_type': 2, 'roomid': 'C88687DAD351B6379C33DC5901307461', 'screen_lock': 1, 'show_exit': 0, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 500, 'talker_pass': '123', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=C88687DAD351B6379C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 2, 'video_zoom': '', 'warm_open': '1', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e738eb8ed453450047490', 'audience_authtype': 1, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=C29396956D1F95609C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': '实时课堂直播间', 'desktop_audio': 0, 'helper_switch': 0, 'id': 351, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': 'C29396956D1F95609C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-23 16_42_54', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=C29396956D1F95609C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': 'C29396956D1F95609C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 3, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=C29396956D1F95609C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': "{'user':'123'}"}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e715b675eb13438da5335', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=8DF14A1C8F62DD529C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 346, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '8DF14A1C8F62DD529C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-23 16_33_42', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=8DF14A1C8F62DD529C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '8DF14A1C8F62DD529C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 20, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=8DF14A1C8F62DD529C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e715bfda7b23437456c75', 'audience_authtype': 2, 'audience_pass': '321', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=B14D9646BB4B71DD9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestCreateRoom', 'desktop_audio': 1, 'helper_switch': 0, 'id': 347, 'inspector_authtype': 2, 'inspector_pass': '123', 'is_follow': '', 'light_mark': 1, 'live_roomid': 'B14D9646BB4B71DD9C33DC5901307461', 'manual_record': 1, 'max_streams': 1, 'max_users': 15, 'mergetype': 1, 'name': 'autoTestCreate2018-08-23 16_33_31', 'platform': 1, 'ppt_support': True, 'presenter_out': True, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=B14D9646BB4B71DD9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 500, 'publisherpass': '123', 'record_bitrate': 0, 'recordstudent': 1, 'room_type': 2, 'roomid': 'B14D9646BB4B71DD9C33DC5901307461', 'screen_lock': 1, 'show_exit': 0, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 500, 'talker_pass': '123', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=B14D9646BB4B71DD9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 2, 'video_zoom': '', 'warm_open': '1', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e715c2be73c3431a48179', 'audience_authtype': 1, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=24E81808B1A287CC9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': '实时课堂直播间', 'desktop_audio': 0, 'helper_switch': 0, 'id': 348, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '24E81808B1A287CC9C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-23 16_33_32', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=24E81808B1A287CC9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '24E81808B1A287CC9C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 3, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=24E81808B1A287CC9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': "{'user':'123'}"}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e5553fda7b23437456c73', 'audience_authtype': 2, 'audience_pass': '321', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=7D80A9B800DEB81E9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestCreateRoom', 'desktop_audio': 1, 'helper_switch': 0, 'id': 345, 'inspector_authtype': 2, 'inspector_pass': '123', 'is_follow': '', 'light_mark': 1, 'live_roomid': '7D80A9B800DEB81E9C33DC5901307461', 'manual_record': 1, 'max_streams': 10, 'max_users': 15, 'mergetype': 1, 'name': 'autoTestCreate2018-08-23 14_33_55', 'platform': 1, 'ppt_support': False, 'presenter_out': True, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=7D80A9B800DEB81E9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 500, 'publisherpass': '123', 'record_bitrate': 0, 'recordstudent': 1, 'room_type': 2, 'roomid': '7D80A9B800DEB81E9C33DC5901307461', 'screen_lock': 1, 'show_exit': 0, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 500, 'talker_pass': '123', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=7D80A9B800DEB81E9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 2, 'video_zoom': '', 'warm_open': '1', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e4b8f9c799b3456bfae1e', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=4018811ED4F7CB309C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 343, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '4018811ED4F7CB309C33DC5901307461', 'manual_record': 0, 'max_streams': 16, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-23 15_43_50', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=4018811ED4F7CB309C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '4018811ED4F7CB309C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 20, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=4018811ED4F7CB309C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e4b90675eb13438da5331', 'audience_authtype': 1, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=AE0B3CF3E864FC729C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': '实时课堂直播间', 'desktop_audio': 0, 'helper_switch': 0, 'id': 344, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': 'AE0B3CF3E864FC729C33DC5901307461', 'manual_record': 0, 'max_streams': 16, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-23 13_52_16', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=AE0B3CF3E864FC729C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': 'AE0B3CF3E864FC729C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 3, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=AE0B3CF3E864FC729C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': "{'user':'123'}"}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7e1cd5a4afd035f908d945', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=42A8012C26122E399C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-23', 'desc': '&lt;p&gt;er&lt;/p&gt;', 'desktop_audio': 0, 'helper_switch': 0, 'id': 342, 'inspector_authtype': 2, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '42A8012C26122E399C33DC5901307461', 'manual_record': 0, 'max_streams': 16, 'max_users': 30, 'mergetype': 2, 'name': 'autotest001', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=42A8012C26122E399C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '42A8012C26122E399C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=42A8012C26122E399C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '1', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7bdacdf16feb914eee5652', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=6453CC94054783A49C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-21', 'desc': '', 'desktop_audio': 0, 'helper_switch': 0, 'id': 340, 'inspector_authtype': 2, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '6453CC94054783A49C33DC5901307461', 'manual_record': 0, 'max_streams': 7, 'max_users': 30, 'mergetype': 2, 'name': 'test', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=6453CC94054783A49C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '6453CC94054783A49C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=6453CC94054783A49C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}], 'total': 20}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_b_list: 获取直播间列表成功：全传</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_2'>通过</button>
+    <div id='div_pt6_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_2'>通过</button>
+    <div id='div_pt6_2' class="collapse in">
+    <pre>
+    
+pt6_2: 请求url:https://ccapi-1.csslcloud.net/api/room/list?lines=100&amp;name=autoTestCreate2018-08-24+09_50_24&amp;page=1&amp;roomid=0BC7898E0AAFB0CF9C33DC5901307461&amp;status=10&amp;userid=99BB96FA148B8FAB&amp;time=1535075425&amp;hash=5E2EDFE8838691CDAB10AE284D78F696
+请求数据: {'userid': '99BB96FA148B8FAB', 'name': 'autoTestCreate2018-08-24 09_50_24', 'status': 10, 'page': 1, 'lines': 100, 'roomid': '0BC7898E0AAFB0CF9C33DC5901307461'}
+返回数据：{'current': 1, 'result': 'OK', 'rooms': [{'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7f645f675eb13438da5340', 'audience_authtype': 2, 'audience_pass': '321', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=C9C1AD01F54D51189C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 2, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': 'autoTestCreateRoom', 'desktop_audio': 1, 'helper_switch': 0, 'id': 359, 'inspector_authtype': 2, 'inspector_pass': '123', 'is_follow': '', 'light_mark': 1, 'live_roomid': 'C9C1AD01F54D51189C33DC5901307461', 'manual_record': 1, 'max_streams': 1, 'max_users': 15, 'mergetype': 1, 'name': 'autoTestCreate2018-08-24 09_50_24', 'platform': 1, 'ppt_support': True, 'presenter_out': True, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=C9C1AD01F54D51189C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 500, 'publisherpass': '123', 'record_bitrate': 0, 'recordstudent': 1, 'room_type': 2, 'roomid': 'C9C1AD01F54D51189C33DC5901307461', 'screen_lock': 1, 'show_exit': 0, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 500, 'talker_pass': '123', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=C9C1AD01F54D51189C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 2, 'video_zoom': '', 'warm_open': '1', 'white_list': None}, {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7f6460fda7b23437456c7f', 'audience_authtype': 1, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=12A4F28867D698909C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': '实时课堂直播间', 'desktop_audio': 0, 'helper_switch': 0, 'id': 360, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '12A4F28867D698909C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestCreate2018-08-24 09_50_24', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=12A4F28867D698909C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '12A4F28867D698909C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 3, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=12A4F28867D698909C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': "{'user':'123'}"}], 'total': 2}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_g_Detail_test.LiveClassAPIDetailTest: 获取房间信息接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c7',1)" class="detail" id='c7'>详细</a></td>
+</tr>
+
+<tr id='pt7_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_detail: 获取房间信息成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt7_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_1'>通过</button>
+    <div id='div_pt7_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt7_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_1'>通过</button>
+    <div id='div_pt7_1' class="collapse in">
+    <pre>
+    
+pt7_1: 请求url:https://ccapi-1.csslcloud.net/api/room/room_detail?roomid=0BC7898E0AAFB0CF9C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535075425&amp;hash=88E168EEEE3DC9DFB8FBBDF37D5A4C49
+请求数据: {'userid': '99BB96FA148B8FAB', 'roomid': '0BC7898E0AAFB0CF9C33DC5901307461'}
+返回数据：{'data': {'allow_audio': True, 'allow_chat': True, 'allow_speak': True, 'atlas_roomid': '5b7f645f9c799b3456bfae2b', 'audience_authtype': 2, 'audience_pass': '99BB96FA148B8FAB', 'audience_url': 'https://view.csslcloud.net/api/view/index?roomid=0BC7898E0AAFB0CF9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'audio_bitrate': 50, 'calltimeout': 10, 'classtype': 1, 'clear_cache': 0, 'closetime': None, 'createtime': '2018-08-24', 'desc': 'autoTestUpdateRoom', 'desktop_audio': 0, 'helper_switch': 0, 'id': 358, 'inspector_authtype': 1, 'inspector_pass': '99BB96FA148B8FAB', 'is_follow': '', 'light_mark': 0, 'live_roomid': '0BC7898E0AAFB0CF9C33DC5901307461', 'manual_record': 0, 'max_streams': 6, 'max_users': 30, 'mergetype': 2, 'name': 'autoTestUpdate2018-08-24 09_50_24', 'platform': 1, 'ppt_support': False, 'presenter_out': False, 'presenter_url': 'https://class.csslcloud.net/index/presenter/?roomid=0BC7898E0AAFB0CF9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'publisher_bitrate': 200, 'publisherpass': '123', 'record_bitrate': 500, 'recordstudent': 1, 'room_type': 2, 'roomid': '0BC7898E0AAFB0CF9C33DC5901307461', 'screen_lock': 0, 'show_exit': 1, 'status': 10, 'talker_authtype': 2, 'talker_bitrate': 200, 'talker_pass': '99BB96FA148B8FAB', 'talker_url': 'https://class.csslcloud.net/index/talker/?roomid=0BC7898E0AAFB0CF9C33DC5901307461&amp;userid=99BB96FA148B8FAB', 'templatetype': 1, 'userid': '99BB96FA148B8FAB', 'video_mode': 1, 'video_zoom': '', 'warm_open': '0', 'white_list': None}, 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_h_Link_test.LiveClassAPILinkTest: 获取房间登陆连接接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c8',1)" class="detail" id='c8'>详细</a></td>
+</tr>
+
+<tr id='ft8_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_link: 获取房间登陆连接成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft8_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft8_1'>失败</button>
+    <div id='div_ft8_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft8_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft8_1'>失败</button>
+    <div id='div_ft8_1' class="collapse in">
+    <pre>
+    
+ft8_1: 请求url:https://ccapi-1.csslcloud.net/api/room/link?roomid=0BC7898E0AAFB0CF9C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535075425&amp;hash=88E168EEEE3DC9DFB8FBBDF37D5A4C49
+请求数据: {'userid': '99BB96FA148B8FAB', 'roomid': '0BC7898E0AAFB0CF9C33DC5901307461'}
+返回数据：{'error': {'code': -1, 'message': 'Object of type method is not JSON serializable', 'type': 'TypeError'}, 'errorMsg': 'Object of type method is not JSON serializable', 'result': 'FAIL'}
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_h_Link_test.py", line 33, in test_a_link
+    self.assertEqual(r['result'],'OK')
+AssertionError: 'FAIL' != 'OK'
+- FAIL
++ OK
+
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_i_SessionId_test.LiveClassAPICloseTest: 获取sessionid接口测试</td>
+    <td class="text-center">4</td>
+    <td class="text-center">0</td>
+    <td class="text-center">4</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c9',4)" class="detail" id='c9'>详细</a></td>
+</tr>
+
+<tr id='ft9_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_role0: 获取sessionid成功：老师带密码</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft9_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft9_1'>失败</button>
+    <div id='div_ft9_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft9_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft9_1'>失败</button>
+    <div id='div_ft9_1' class="collapse in">
+    <pre>
+    
+ft9_1: 请求url:https://ccapi-1.csslcloud.net/api/room/create/sessionid?client=0&amp;name=testauto&amp;password=123&amp;role=0&amp;roomid=0BC7898E0AAFB0CF9C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535075425&amp;hash=7D5A7FD910B27B9CF89BBFD582D2E400
+输入参数：{'name': 'testauto', 'userid': '99BB96FA148B8FAB', 'roomid': '0BC7898E0AAFB0CF9C33DC5901307461', 'password': '123', 'role': '0', 'client': '0'}
+返回数据: {'error': {'code': -1, 'message': "Object type &lt;class 'str'&gt; cannot be passed to C code", 'type': 'TypeError'}, 'errorMsg': "Object type &lt;class 'str'&gt; cannot be passed to C code", 'result': 'FAIL'}
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_i_SessionId_test.py", line 40, in test_a_role0
+    self.assertEqual(r['result'],'OK')
+AssertionError: 'FAIL' != 'OK'
+- FAIL
++ OK
+
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft9_2' class='none'>
+    <td class='failCase'><div class='testcase'>test_b_role1: 获取sessionid成功：互动</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft9_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft9_2'>失败</button>
+    <div id='div_ft9_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft9_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft9_2'>失败</button>
+    <div id='div_ft9_2' class="collapse in">
+    <pre>
+    
+ft9_2: 请求url:https://ccapi-1.csslcloud.net/api/room/create/sessionid?client=0&amp;name=testauto&amp;role=1&amp;roomid=0BC7898E0AAFB0CF9C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535075426&amp;hash=EC4800E7E2F34DB65AD6460BF6E4EE1A
+输入参数：{'name': 'testauto', 'userid': '99BB96FA148B8FAB', 'roomid': '0BC7898E0AAFB0CF9C33DC5901307461', 'role': '1', 'client': '0'}
+返回数据: {'error': {'code': -1, 'message': "Object type &lt;class 'str'&gt; cannot be passed to C code", 'type': 'TypeError'}, 'errorMsg': "Object type &lt;class 'str'&gt; cannot be passed to C code", 'result': 'FAIL'}
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_i_SessionId_test.py", line 52, in test_b_role1
+    self.assertEqual(r['result'],'OK')
+AssertionError: 'FAIL' != 'OK'
+- FAIL
++ OK
+
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft9_3' class='none'>
+    <td class='failCase'><div class='testcase'>test_c_role2: 获取sessionid成功：旁听</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft9_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft9_3'>失败</button>
+    <div id='div_ft9_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft9_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft9_3'>失败</button>
+    <div id='div_ft9_3' class="collapse in">
+    <pre>
+    
+ft9_3: 请求url:https://ccapi-1.csslcloud.net/api/room/create/sessionid?client=0&amp;name=testauto&amp;role=2&amp;roomid=0BC7898E0AAFB0CF9C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535075426&amp;hash=17BC743CBF1197A33B594CF524960431
+输入参数：{'name': 'testauto', 'userid': '99BB96FA148B8FAB', 'roomid': '0BC7898E0AAFB0CF9C33DC5901307461', 'role': '1', 'client': '0'}
+返回数据: {'error': {'code': -1, 'message': "Object type &lt;class 'str'&gt; cannot be passed to C code", 'type': 'TypeError'}, 'errorMsg': "Object type &lt;class 'str'&gt; cannot be passed to C code", 'result': 'FAIL'}
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_i_SessionId_test.py", line 64, in test_c_role2
+    self.assertEqual(r['result'],'OK')
+AssertionError: 'FAIL' != 'OK'
+- FAIL
++ OK
+
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft9_4' class='none'>
+    <td class='failCase'><div class='testcase'>test_d_client1: 获取sessionid成功：移动端</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft9_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft9_4'>失败</button>
+    <div id='div_ft9_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft9_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft9_4'>失败</button>
+    <div id='div_ft9_4' class="collapse in">
+    <pre>
+    
+ft9_4: 请求url:https://ccapi-1.csslcloud.net/api/room/create/sessionid?client=1&amp;name=testauto&amp;role=1&amp;roomid=0BC7898E0AAFB0CF9C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535075426&amp;hash=9AE2EF1C04234459DAD67CAB6728111E
+输入参数：{'name': 'testauto', 'userid': '99BB96FA148B8FAB', 'roomid': '0BC7898E0AAFB0CF9C33DC5901307461', 'role': '1', 'client': '1'}
+返回数据: {'error': {'code': -1, 'message': "Object type &lt;class 'str'&gt; cannot be passed to C code", 'type': 'TypeError'}, 'errorMsg': "Object type &lt;class 'str'&gt; cannot be passed to C code", 'result': 'FAIL'}
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_i_SessionId_test.py", line 76, in test_d_client1
+    self.assertEqual(r['result'],'OK')
+AssertionError: 'FAIL' != 'OK'
+- FAIL
++ OK
+
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_j_Chatmsg_test.LiveClassAPIChatmsgTest: 获取聊天信息接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c10',1)" class="detail" id='c10'>详细</a></td>
+</tr>
+
+<tr id='ft10_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_chatmsg: 获取聊天信息成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft10_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft10_1'>失败</button>
+    <div id='div_ft10_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft10_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft10_1'>失败</button>
+    <div id='div_ft10_1' class="collapse in">
+    <pre>
+    
+ft10_1: 404 Client Error: NOT FOUND for url: https://ccapi-1.csslcloud.net/api/live/chatmsg?liveid=3DC85D781667C629&amp;roomid=42A8012C26122E399C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535075426&amp;hash=7D9C889C1596BFA22BFDE295CC9AE8EB
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_j_Chatmsg_test.py", line 28, in test_a_chatmsg
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_k_Record_test.LiveClassAPIRecordTest: 查询回放列表接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c11',1)" class="detail" id='c11'>详细</a></td>
+</tr>
+
+<tr id='ft11_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_record: 查询回访列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft11_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft11_1'>失败</button>
+    <div id='div_ft11_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft11_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft11_1'>失败</button>
+    <div id='div_ft11_1' class="collapse in">
+    <pre>
+    
+ft11_1: 404 Client Error: NOT FOUND for url: https://ccapi-1.csslcloud.net/api/v2/record/info?roomid=42A8012C26122E399C33DC5901307461&amp;userid=99BB96FA148B8FAB&amp;time=1535075426&amp;hash=F332A99A6595701137A4EA735F5AABBA
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_k_Record_test.py", line 28, in test_a_record
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>LiveClassAPI_l_Rearch_test.LiveClassAPISearchTest: 查询回放信息接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c12',1)" class="detail" id='c12'>详细</a></td>
+</tr>
+
+<tr id='ft12_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_a_search: 查询回放信息成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft12_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft12_1'>失败</button>
+    <div id='div_ft12_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft12_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft12_1'>失败</button>
+    <div id='div_ft12_1' class="collapse in">
+    <pre>
+    
+ft12_1: 404 Client Error: NOT FOUND for url: https://ccapi-1.csslcloud.net/api/v2/record/search?recordid=BD6689A20F863100&amp;userid=99BB96FA148B8FAB&amp;time=1535075426&amp;hash=57873D047A54EFC1536B78E224DA5AC9
+请求失败，没有返回数据
+Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_l_Rearch_test.py", line 28, in test_a_search
+    self.assertEqual(None,'')
+AssertionError: None != ''
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_m_Add_test.LiveClassAPIAddTest: 上传文档接口测试</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">2</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c13',2)" class="detail" id='c13'>详细</a></td>
+</tr>
+
+<tr id='ft13_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_add: 获取文档上传信息表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft13_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft13_1'>错误</button>
+    <div id='div_ft13_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft13_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft13_1'>错误</button>
+    <div id='div_ft13_1' class="collapse in">
+    <pre>
+    
+ft13_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_m_Add_test.py", line 19, in setUp
+    add_data = t.get_thqs(self.add_data)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 37, in get_thqs
+    API_KEY = self.bl_id(q)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 28, in bl_id
+    if q['userid'] == "99BB96FA148B8FAB":
+KeyError: 'userid'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft13_2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_b_add: 文档上传成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft13_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft13_2'>错误</button>
+    <div id='div_ft13_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft13_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft13_2'>错误</button>
+    <div id='div_ft13_2' class="collapse in">
+    <pre>
+    
+ft13_2: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_m_Add_test.py", line 19, in setUp
+    add_data = t.get_thqs(self.add_data)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 37, in get_thqs
+    API_KEY = self.bl_id(q)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 28, in bl_id
+    if q['userid'] == "99BB96FA148B8FAB":
+KeyError: 'userid'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_n_Delete_test.LiveClassAPIDeleteTest: 删除文档接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c14',1)" class="detail" id='c14'>详细</a></td>
+</tr>
+
+<tr id='ft14_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 获取直播间列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft14_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft14_1'>错误</button>
+    <div id='div_ft14_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft14_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft14_1'>错误</button>
+    <div id='div_ft14_1' class="collapse in">
+    <pre>
+    
+ft14_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_n_Delete_test.py", line 16, in setUp
+    delete_data = t.get_thqs(self.delete_data)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 37, in get_thqs
+    API_KEY = self.bl_id(q)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 28, in bl_id
+    if q['userid'] == "99BB96FA148B8FAB":
+KeyError: 'userid'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_o_DocList_test.LiveClassAPIDocListTest: 查询文档接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c15',1)" class="detail" id='c15'>详细</a></td>
+</tr>
+
+<tr id='ft15_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 获取共享文档列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft15_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft15_1'>错误</button>
+    <div id='div_ft15_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft15_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft15_1'>错误</button>
+    <div id='div_ft15_1' class="collapse in">
+    <pre>
+    
+ft15_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_o_DocList_test.py", line 16, in setUp
+    doc_list_data = t.get_thqs(self.doc_list_data)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 37, in get_thqs
+    API_KEY = self.bl_id(q)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 28, in bl_id
+    if q['userid'] == "99BB96FA148B8FAB":
+KeyError: 'userid'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_p_Auth_test.LiveClassAPIAuthTest: 获取房间文档列表接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c16',1)" class="detail" id='c16'>详细</a></td>
+</tr>
+
+<tr id='ft16_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 获取房间文档列表成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft16_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft16_1'>错误</button>
+    <div id='div_ft16_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft16_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft16_1'>错误</button>
+    <div id='div_ft16_1' class="collapse in">
+    <pre>
+    
+ft16_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_p_Auth_test.py", line 16, in setUp
+    auth_data = t.get_thqs(self.auth_data)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 37, in get_thqs
+    API_KEY = self.bl_id(q)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 28, in bl_id
+    if q['userid'] == "99BB96FA148B8FAB":
+KeyError: 'userid'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_q_Relate_test.LiveClassAPIRelateTest: 文档关联接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c17',1)" class="detail" id='c17'>详细</a></td>
+</tr>
+
+<tr id='ft17_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 文档关联成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft17_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft17_1'>错误</button>
+    <div id='div_ft17_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft17_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft17_1'>错误</button>
+    <div id='div_ft17_1' class="collapse in">
+    <pre>
+    
+ft17_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_q_Relate_test.py", line 16, in setUp
+    relate_data = t.get_thqs(self.relate_data)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 37, in get_thqs
+    API_KEY = self.bl_id(q)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 28, in bl_id
+    if q['userid'] == "99BB96FA148B8FAB":
+KeyError: 'userid'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_r_Unrelate_test.LiveClassAPIUnrelateTest: 取消文档关联接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c18',1)" class="detail" id='c18'>详细</a></td>
+</tr>
+
+<tr id='ft18_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 取消文档关联成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft18_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft18_1'>错误</button>
+    <div id='div_ft18_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft18_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft18_1'>错误</button>
+    <div id='div_ft18_1' class="collapse in">
+    <pre>
+    
+ft18_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_r_Unrelate_test.py", line 16, in setUp
+    unrelate_data = t.get_thqs(self.unrelate_data)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 37, in get_thqs
+    API_KEY = self.bl_id(q)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 28, in bl_id
+    if q['userid'] == "99BB96FA148B8FAB":
+KeyError: 'userid'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_s_Video_test.LiveClassAPIVideoTest: 上传视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c19',1)" class="detail" id='c19'>详细</a></td>
+</tr>
+
+<tr id='ft19_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 生成上传接口成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft19_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft19_1'>错误</button>
+    <div id='div_ft19_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft19_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft19_1'>错误</button>
+    <div id='div_ft19_1' class="collapse in">
+    <pre>
+    
+ft19_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_s_Video_test.py", line 16, in setUp
+    create_upload_info_data = t.get_thqs(self.create_upload_info_data)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 37, in get_thqs
+    API_KEY = self.bl_id(q)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 28, in bl_id
+    if q['userid'] == "99BB96FA148B8FAB":
+KeyError: 'userid'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_t_Video_test.LiveClassAPIVideoTest: 关联视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c20',1)" class="detail" id='c20'>详细</a></td>
+</tr>
+
+<tr id='ft20_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 生成上传接口成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft20_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft20_1'>错误</button>
+    <div id='div_ft20_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft20_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft20_1'>错误</button>
+    <div id='div_ft20_1' class="collapse in">
+    <pre>
+    
+ft20_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_t_Video_test.py", line 16, in setUp
+    video_relate_data = t.get_thqs(self.video_relate_data)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 37, in get_thqs
+    API_KEY = self.bl_id(q)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 28, in bl_id
+    if q['userid'] == "99BB96FA148B8FAB":
+KeyError: 'userid'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_u_Video_test.LiveClassAPIVideoTest: 查询房间已关联的媒体接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c21',1)" class="detail" id='c21'>详细</a></td>
+</tr>
+
+<tr id='ft21_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 查询房间已关联的媒体成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft21_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft21_1'>错误</button>
+    <div id='div_ft21_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft21_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft21_1'>错误</button>
+    <div id='div_ft21_1' class="collapse in">
+    <pre>
+    
+ft21_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_u_Video_test.py", line 16, in setUp
+    onrelated_data = t.get_thqs(self.onrelated_data)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 37, in get_thqs
+    API_KEY = self.bl_id(q)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 28, in bl_id
+    if q['userid'] == "99BB96FA148B8FAB":
+KeyError: 'userid'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_v_Video_test.LiveClassAPIVideoTest: 设为暖场视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c22',1)" class="detail" id='c22'>详细</a></td>
+</tr>
+
+<tr id='ft22_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 设为暖场视频成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft22_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft22_1'>错误</button>
+    <div id='div_ft22_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft22_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft22_1'>错误</button>
+    <div id='div_ft22_1' class="collapse in">
+    <pre>
+    
+ft22_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_v_Video_test.py", line 16, in setUp
+    warm_set_data = t.get_thqs(self.warm_set_data)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 37, in get_thqs
+    API_KEY = self.bl_id(q)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 28, in bl_id
+    if q['userid'] == "99BB96FA148B8FAB":
+KeyError: 'userid'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_w_Video_test.LiveClassAPIVideoTest: 取消暖场视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c23',1)" class="detail" id='c23'>详细</a></td>
+</tr>
+
+<tr id='ft23_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 取消暖场视频成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft23_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft23_1'>错误</button>
+    <div id='div_ft23_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft23_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft23_1'>错误</button>
+    <div id='div_ft23_1' class="collapse in">
+    <pre>
+    
+ft23_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_w_Video_test.py", line 16, in setUp
+    warm_unset_data = t.get_thqs(self.warm_unset_data)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 37, in get_thqs
+    API_KEY = self.bl_id(q)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 28, in bl_id
+    if q['userid'] == "99BB96FA148B8FAB":
+KeyError: 'userid'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>LiveClassAPI_x_Video_test.LiveClassAPIVideoTest: 取消关联视频接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c24',1)" class="detail" id='c24'>详细</a></td>
+</tr>
+
+<tr id='ft24_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_a_list: 取消关联视频成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft24_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft24_1'>错误</button>
+    <div id='div_ft24_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft24_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft24_1'>错误</button>
+    <div id='div_ft24_1' class="collapse in">
+    <pre>
+    
+ft24_1: Traceback (most recent call last):
+  File "F:\LiveClassAPIAutoTest\interface\LiveClassAPI_x_Video_test.py", line 16, in setUp
+    video_unrelate_data = t.get_thqs(self.video_unrelate_data)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 37, in get_thqs
+    API_KEY = self.bl_id(q)
+  File "F:\LiveClassAPIAutoTest\util\THQS.py", line 28, in bl_id
+    if q['userid'] == "99BB96FA148B8FAB":
+KeyError: 'userid'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>LiveClassAPI_z_Close_test.LiveClassAPICloseTest: 关闭直播间接口测试</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c25',1)" class="detail" id='c25'>详细</a></td>
+</tr>
+
+<tr id='pt25_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_a_update: 关闭直播间成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt25_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt25_1'>通过</button>
+    <div id='div_pt25_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt25_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt25_1'>通过</button>
+    <div id='div_pt25_1' class="collapse in">
+    <pre>
+    
+pt25_1: 输入参数：{'userid': '99BB96FA148B8FAB', 'roomid': '0BC7898E0AAFB0CF9C33DC5901307461'}
+返回数据: {'data': '', 'result': 'OK'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='total_row' class="text-center active">
+    <td>总计</td>
+    <td>35</td>
+    <td>9</td>
+    <td>9</td>
+    <td>17</td>
+    <td>通过率：25.71%</td>
+</tr>
+</table>
+
+<div id='ending'>&nbsp;</div>
+    <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+    <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+    </span></a></div>
+    
+</body>
+</html>
